@@ -1,7 +1,11 @@
-import React from 'react';
 import { Link } from 'react-router-dom'
 
-const PAGES = [
+interface Page {
+  destination: string;
+  label: string;
+}
+
+const PAGES: Page[] = [
   { label: 'Home', destination: '/'},
   { label: 'Users', destination: '/users'},
   { label: 'Chatrooms', destination: '/chatrooms'},
@@ -9,7 +13,7 @@ const PAGES = [
 
 function Navbar() {
 
-  const mapper = (page) => (
+  const mapper = (page: Page) => (
     <li><Link to={page.destination}><button>{page.label}</button></Link></li>
   );
 
