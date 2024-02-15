@@ -12,6 +12,12 @@ interface Chatroom {
   description: string;
 }
 
+interface Message {
+  timestamp: string;
+  user: string;
+  content: string;
+}
+
 
 function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
   const [name, setName] = useState('');
@@ -48,6 +54,7 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
 function Chatrooms() {
   const [error, setError] = useState('');
   const [chatrooms, setChatrooms] = useState<Chatroom[]>([]);
+  const [msgs, setMsgs] = useState<Message[]>([]);
 
   useEffect(() => {
     fetchChatrooms();
@@ -71,6 +78,28 @@ function Chatrooms() {
       });
   };
 
+  const fetchMessages = (chatroom) => {
+    axios.get('http://thejollyfatso.pythonanywhere.com/get_msgs/' + chatroom)
+      .then((response) => {
+        const msgsObject = response.data;
+        console.log(response.data);
+        const keys = Object.keys(msgsObject);
+        const msgsArray = keys.map((key) => ([
+          msgsObject[key].Timestamp,
+          msgsObject[key].User,
+          msgsObject[key].Content
+        ]));
+        const msgsFetch: Message[] = msgsArray.map(([timestamp, user, content]) => ({
+          timestamp,
+          user,
+          content
+        }));
+        console.log(msgsFetch);
+        setMsgs(msgsFetch);
+      })
+      .catch(() => { setError('oopsie woopsie'); });
+  };
+
   useEffect(
     fetchChatrooms,
     [],
@@ -87,9 +116,15 @@ function Chatrooms() {
         </div>
       )}
     <AddChatroomForm setError={setError} fetchChatrooms={fetchChatrooms} />
+    {msgs.map((msg) => (
+      <div>
+        <p>{msg.user} at {msg.timestamp} said:</p>
+        <h4>{msg.content}</h4>
+      </div>
+    ))}
     {chatrooms.map((chatroom) => (
       <div className="chatroom-container">
-        <h2>{chatroom.chatroom_name}</h2>
+        <h2>{chatroom.chatroom_name}<button onClick={() => fetchMessages(chatroom.chatroom_name)}></button></h2>
         <p>{chatroom.description}</p>
       </div>
     ))}
