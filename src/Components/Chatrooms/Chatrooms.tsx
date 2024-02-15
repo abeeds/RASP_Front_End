@@ -89,7 +89,7 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
         Message
       </label>
       <input type="text" id="content" value={content} onChange={changeContent}/>
-      <button type="submit">Submit</button>
+      <button type="submit">Send</button>
     </form>
   );
 }
@@ -160,8 +160,8 @@ function Chatrooms() {
       )}
     {msgs.map((msg) => (
       <div>
-        <p>{msg.user} at {msg.timestamp} said:</p>
-        <h4>{msg.content}</h4>
+        <h5>{msg.user} at {msg.timestamp} said:</h5>
+        <p>{msg.content}</p>
       </div>
     ))}
     <SendMessageForm setError={setError} fetchMessages={(chatroom) => fetchMessages(chatroom)} />
