@@ -11,6 +11,7 @@ interface AddUserFormProps {
 
 interface User {
   username: string;
+  id: string;
 }
 
 
@@ -53,13 +54,12 @@ function Users() {
         .then((response) => { 
           const usersObject = response.data;
           const keys = Object.keys(usersObject);
-          const usersArray = keys.map((key) => usersObject[key]);
-
-          // const myusersObject = response.data.Data;
-          // const mykeys = Object.keys(myusersObject);
-          // const myusersArray = mykeys.map((mykey) => myusersObject[mykey]);
-          // setUsers(keys); //previously set to usersArray
-          setUsers(usersArray); //previously set to usersArray
+          const usersArray = keys.map((key) => ([key, usersObject[key]]));
+          const usersFetch = usersArray.map(([username, id]) => ({
+            username,
+            id
+          }));
+          setUsers(usersFetch); //previously set to usersArray
           console.log("Users keys:", keys);
           console.log("Users: ", users);
         })
