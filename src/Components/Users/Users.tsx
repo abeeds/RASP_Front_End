@@ -17,15 +17,19 @@ interface User {
 
 function AddUserForm({ setError, fetchUsers }: AddUserFormProps) {
   const [name, setName] = useState('');
+  const [pass, setPass] = useState('');
 
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
+  };
+  const changePass = (event: ChangeEvent<HTMLInputElement>) => {
+    setPass(event.target.value);
   };
 
   const addUser = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios
-      .post('http://thejollyfatso.pythonanywhere.com/get_users', { name: name })
+      .post('http://thejollyfatso.pythonanywhere.com/register/' + name + '/' + pass)
       .then(() => {
         setError('');
         fetchUsers();
@@ -39,6 +43,8 @@ function AddUserForm({ setError, fetchUsers }: AddUserFormProps) {
     <form onSubmit={addUser}>
       <label htmlFor="name">Name</label>
       <input type="text" id="name" value={name} onChange={changeName} />
+      <label htmlFor="pass">Password</label>
+      <input type="text" id="pass" value={pass} onChange={changePass} />
       <button type="submit">Submit</button>
     </form>
   );
