@@ -70,6 +70,7 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
     axios.post('http://thejollyfatso.pythonanywhere.com/write_msg/' + chatroom + '/' + user + '/' + content)
       .then(() => {
         setError('');
+        setContent('');
         fetchMessages(chatroom);
       })
       .catch((error) => { setError(error.response.data.message); });
