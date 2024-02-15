@@ -12,6 +12,11 @@ interface Chatroom {
   description: string;
 }
 
+interface SendMessageFormProps {
+  setError: (error: string) => void;
+  fetchMessages: (chatroom: string) => void;
+}
+
 interface Message {
   timestamp: string;
   user: string;
@@ -51,6 +56,44 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
   );
 }
 
+function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
+  const [user, setUser] = useState('');
+  const [chatroom, setChatroom] = useState('');
+  const [content, setContent] = useState('');
+
+  const changeUser = (event: ChangeEvent<HTMLInputElement>) => { setUser(event.target.value); };
+  const changeChatroom = (event: ChangeEvent<HTMLInputElement>) => { setChatroom(event.target.value); };
+  const changeContent = (event: ChangeEvent<HTMLInputElement>) => { setContent(event.target.value); };
+
+  const sendMessage = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    axios.post('http://thejollyfatso.pythonanywhere.com/write_msg/' + chatroom + '/' + user + '/' + content)
+      .then(() => {
+        setError('');
+        fetchMessages(chatroom);
+      })
+      .catch((error) => { setError(error.response.data.message); });
+  }
+
+  return (
+    <form onSubmit={sendMessage}>
+      <label htmlFor="chatroom">
+        Chatroom
+      </label>
+      <input type="text" id="chatroom" value={chatroom} onChange={changeChatroom}/>
+      <label htmlFor="user">
+        Username
+      </label>
+      <input type="text" id="user" value={user} onChange={changeUser}/>
+      <label htmlFor="content">
+        Message
+      </label>
+      <input type="text" id="content" value={content} onChange={changeContent}/>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
 function Chatrooms() {
   const [error, setError] = useState('');
   const [chatrooms, setChatrooms] = useState<Chatroom[]>([]);
@@ -78,7 +121,7 @@ function Chatrooms() {
       });
   };
 
-  const fetchMessages = (chatroom) => {
+  const fetchMessages = (chatroom: string) => {
     axios.get('http://thejollyfatso.pythonanywhere.com/get_msgs/' + chatroom)
       .then((response) => {
         const msgsObject = response.data;
@@ -115,19 +158,21 @@ function Chatrooms() {
         {error}
         </div>
       )}
-    <AddChatroomForm setError={setError} fetchChatrooms={fetchChatrooms} />
     {msgs.map((msg) => (
       <div>
         <p>{msg.user} at {msg.timestamp} said:</p>
         <h4>{msg.content}</h4>
       </div>
     ))}
+    <SendMessageForm setError={setError} fetchMessages={(chatroom) => fetchMessages(chatroom)} />
     {chatrooms.map((chatroom) => (
       <div className="chatroom-container">
         <h2>{chatroom.chatroom_name}<button onClick={() => fetchMessages(chatroom.chatroom_name)}></button></h2>
         <p>{chatroom.description}</p>
       </div>
     ))}
+    <hr></hr>
+    <AddChatroomForm setError={setError} fetchChatrooms={fetchChatrooms} />
     </div>
   );
 }
