@@ -2,6 +2,8 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 import axios from 'axios';
 
+import { BACKEND_URL } from '../../constants';
+
 
 interface AddUserFormProps {
   setError: (error: string) => void;
@@ -29,7 +31,7 @@ function AddUserForm({ setError, fetchUsers }: AddUserFormProps) {
   const addUser = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios
-      .post('http://thejollyfatso.pythonanywhere.com/register/' + name + '/' + pass)
+      .post(`${BACKEND_URL}/register/` + name + '/' + pass)
       .then(() => {
         setError('');
         fetchUsers();
@@ -55,8 +57,7 @@ function Users() {
   const [users, setUsers] = useState<User[]>([]);
 
   const fetchUsers = () => {
-      //axios.get('http://localhost:8000/users')
-      axios.get('http://thejollyfatso.pythonanywhere.com/get_users')
+      axios.get(`${BACKEND_URL}/get_users`)
         .then((response) => { 
           const usersObject = response.data;
           const keys = Object.keys(usersObject);

@@ -1,4 +1,3 @@
 #!/bin/sh
-export REACT_APP_URL_PRE="http://thejollyfasto.pythonanywhere.com"
-echo $REACT_APP_URL_PRE
+export VITE_URL_PRE="http://thejollyfatso.pythonanywhere.com"
 npm run dev

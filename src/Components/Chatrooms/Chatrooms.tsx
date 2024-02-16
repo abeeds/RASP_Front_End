@@ -1,6 +1,8 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 
+import { BACKEND_URL } from '../../constants';
+
 // Type Declarations
 interface AddChatroomFormProps {
   setError: (error: string) => void;
@@ -33,7 +35,7 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
 
   const addChatroom = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios.post('http://thejollyfatso.pythonanywhere.com/insert_chatroom/' + name + '/' + description)
+    axios.post(`${BACKEND_URL}/insert_chatroom/` + name + '/' + description)
       .then(() => {
         setError('');
         fetchChatrooms();
@@ -67,7 +69,7 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
 
   const sendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios.post('http://thejollyfatso.pythonanywhere.com/write_msg/' + chatroom + '/' + user + '/' + content)
+    axios.post(`${BACKEND_URL}/write_msg/` + chatroom + '/' + user + '/' + content)
       .then(() => {
         setError('');
         setContent('');
@@ -105,7 +107,7 @@ function Chatrooms() {
   }, []); // Empty dependency array to run effect only once on mount
 
   const fetchChatrooms = () => {
-    axios.get('http://thejollyfatso.pythonanywhere.com/get_chatrooms')
+    axios.get(`${BACKEND_URL}/get_chatrooms`)
       .then((response) => {
         const chatroomsObject = response.data;
         const keys = Object.keys(chatroomsObject);
@@ -123,7 +125,7 @@ function Chatrooms() {
   };
 
   const fetchMessages = (chatroom: string) => {
-    axios.get('http://thejollyfatso.pythonanywhere.com/get_msgs/' + chatroom)
+    axios.get(`${BACKEND_URL}/get_msgs/` + chatroom)
       .then((response) => {
         const msgsObject = response.data;
         console.log(response.data);
