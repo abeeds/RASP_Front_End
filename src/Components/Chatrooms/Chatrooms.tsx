@@ -53,7 +53,7 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
         Description
       </label>
       <input type="text" id="description" value={description} onChange={changeDescription}/>
-      <button type="submit">Submit</button>
+      <button type="submit">Create Room</button>
     </form>
   );
 }

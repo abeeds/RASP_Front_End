@@ -10,6 +10,10 @@ interface AddUserFormProps {
   fetchUsers: () => void;
 }
 
+interface DelUserFormProps {
+  setError: (error: string) => void;
+  fetchUsers: () => void;
+}
 
 interface User {
   username: string;
@@ -45,9 +49,44 @@ function AddUserForm({ setError, fetchUsers }: AddUserFormProps) {
     <form onSubmit={addUser}>
       <label htmlFor="name">Name</label>
       <input type="text" id="name" value={name} onChange={changeName} />
-      <label htmlFor="pass">Password</label>
+      <label htmlFor="pass">Password (insecure)</label>
       <input type="text" id="pass" value={pass} onChange={changePass} />
-      <button type="submit">Submit</button>
+      <button type="submit">Register</button>
+    </form>
+  );
+}
+
+function DelUserForm({ setError, fetchUsers }: DelUserFormProps) {
+  const [name, setName] = useState('');
+  const [pass, setPass] = useState('');
+
+  const changeName = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+  const changePass = (event: ChangeEvent<HTMLInputElement>) => {
+    setPass(event.target.value);
+  };
+
+  const delUser = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    axios
+      .delete(`${BACKEND_URL}/deactivate/` + name)
+      .then(() => {
+        setError('');
+        fetchUsers();
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+      });
+  };
+
+  return (
+    <form onSubmit={delUser}>
+      <label htmlFor="name">Name</label>
+      <input type="text" id="name" value={name} onChange={changeName} />
+      <label htmlFor="pass">Password which will not be checked/verified</label>
+      <input type="text" id="pass" value={pass} onChange={changePass} />
+      <button type="submit">!!CAUTION!! delete forever and ever</button>
     </form>
   );
 }
@@ -80,7 +119,7 @@ function Users() {
   return (
     <div className="wrapper">
       <h1>
-        Users p2
+        Users Registry
       </h1>
       {error && (
         <div className="error-message">
@@ -93,6 +132,7 @@ function Users() {
         <h2>{user.username}</h2>
       </div>
     ))}
+    <DelUserForm setError={setError} fetchUsers={fetchUsers} />
     </div>
   );
 }
