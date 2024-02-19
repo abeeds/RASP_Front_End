@@ -10,6 +10,8 @@ const PAGES: Page[] = [
   { label: 'Chatrooms', destination: '/chatrooms'},
 ]
 
+const home_url: string = "/login";
+
 function Navbar() {
 
   const mapper = (page: Page) => (
@@ -25,7 +27,7 @@ function Navbar() {
         </button>
         <div className="container">
           {/* Home Page */}
-          <a className="navbar-brand mr-4" href="/login"><strong>RASP</strong></a>
+          <a className="navbar-brand mr-4" href={home_url}><strong>RASP</strong></a>
           
           {/* Nav Toggler */}
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
