@@ -5,21 +5,38 @@
 }
 
 html {
-  --poppy: hsla(356, 74%, 52%, 1);
-  --cambridge-blue: hsla(132, 27%, 63%, 1);
-  --lemon-chiffon: hsla(58, 74%, 85%, 1);
+  --dark: rgb(34, 34, 34);
   --buff: hsla(27, 64%, 65%, 1);
   --bistre: hsla(10, 31%, 19%, 1);
-  --off-white: hsla(45, 29%, 97%, 1);
+  --white: rgb(255, 255, 255);
 
-  --background-color: var(--off-white);
-  --accent-color: var(--cambridge-blue);
+  --background-color: var(--white);
+  --accent-color: var(--dark);
   background-color: var(--background-color);
+}
+
+
+.site-header .navbar-nav .nav-link {
+  color: rgb(255, 255, 255);
+}
+
+.container {
+  clear: both;
+}
+
+.navigBG {
+  background-color: #1f1f1f;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #6e6e6e;
+  text-decoration: underline;
 }
 
 .wrapper {
   max-width: min(800px, 100% - 4rem);
   margin-inline: auto;
+  clear: both;
 }
 
 .wrapper header {
@@ -92,62 +109,6 @@ form button[type=button] {
 form button[type=button]:focus,
 form button[type=button]:hover {
   border-color: var(--accent-color);
-}
-
-nav {
-  margin: 0;
-  padding-top: 0.5rem;
-  background-color: var(--accent-color);
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  padding: 0;
-}
-
-nav a {
-  color: var(--background-color);
-  display: block;
-  --padding: 1rem;
-  padding: var(--padding);
-  text-decoration: none;
-  font-weight: bold;
-  --border-radius: 15px;
-  border-radius: 5px 5px 0 0;
-  position: relative;
-}
-nav a:hover::before,
-nav a:focus::before {
-  content: '';
-  position: absolute;
-  width: var(--border-radius);
-  height: var(--border-radius);
-  border-radius: 0 0 100vw 0;
-  box-shadow: 5px 5px 0 5px var(--background-color);
-  background-color: var(--accent-color);
-  bottom: 0;
-  left: calc(var(--padding) * -1 + 1px);
-}
-nav a:hover::after,
-nav a:focus::after {
-  content: '';
-  position: absolute;
-  width: var(--border-radius);
-  height: var(--border-radius);
-  border-radius: 0 0 0 100vw;
-  box-shadow: -5px 5px 0 5px var(--background-color);
-  background-color: var(--accent-color);
-  bottom: 0;
-  right: calc(var(--padding) * -1 + 1px);
-}
-
-nav a:hover,
-nav a:focus {
-  background-color: var(--background-color);
-  color: var(--accent-color);
-  outline: none;
 }
 
 .game-container {
