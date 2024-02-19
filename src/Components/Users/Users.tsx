@@ -114,6 +114,7 @@ function Users() {
 
   useEffect(
     fetchUsers,
+    []
   );
 
   return (
