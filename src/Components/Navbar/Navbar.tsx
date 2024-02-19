@@ -6,7 +6,7 @@ interface Page {
 }
 
 const PAGES: Page[] = [
-  { label: 'Home', destination: '/'},
+  { label: 'Home', destination: '/login'},
   { label: 'Users', destination: '/users'},
   { label: 'Chatrooms', destination: '/chatrooms'},
 ]

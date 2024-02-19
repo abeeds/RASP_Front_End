@@ -7,6 +7,7 @@ import {
 import './App.css';
 
 import Navbar from './Components/Navbar';
+import Login from './Components/Login';
 import Users from './Components/Users';
 import Chatrooms from './Components/Chatrooms';
 
@@ -15,7 +16,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="" element={<h1>Home</h1>} />
+        <Route path="login" element={<Login/>} />
         <Route path="users" element={<Users/>} />
         <Route path="chatrooms" element={<Chatrooms/>} />
       </Routes>

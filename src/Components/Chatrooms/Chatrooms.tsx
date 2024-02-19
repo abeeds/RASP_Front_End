@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 
 import { BACKEND_URL } from '../../constants';
+import { getUser } from '../../var-store';
 
 // Type Declarations
 interface AddChatroomFormProps {
@@ -59,11 +60,10 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
 }
 
 function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
-  const [user, setUser] = useState('');
   const [chatroom, setChatroom] = useState('');
   const [content, setContent] = useState('');
 
-  const changeUser = (event: ChangeEvent<HTMLInputElement>) => { setUser(event.target.value); };
+  const user: string = getUser();
   const changeChatroom = (event: ChangeEvent<HTMLInputElement>) => { setChatroom(event.target.value); };
   const changeContent = (event: ChangeEvent<HTMLInputElement>) => { setContent(event.target.value); };
 
@@ -84,10 +84,6 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
         Chatroom
       </label>
       <input type="text" id="chatroom" value={chatroom} onChange={changeChatroom}/>
-      <label htmlFor="user">
-        Username
-      </label>
-      <input type="text" id="user" value={user} onChange={changeUser}/>
       <label htmlFor="content">
         Message
       </label>
