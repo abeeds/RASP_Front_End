@@ -93,7 +93,7 @@ function Chatrooms() {
       )}
     {chatrooms.map((chatroom) => (
       <div className="chatroom-container">
-        <h2>{chatroom.chatroom_name}<button onClick={() => { setRoom(chatroom.chatroom_name); navigate('/messages'); }}>View</button></h2>
+        <h2><button onClick={() => { setRoom(chatroom.chatroom_name); navigate('/messages'); }}>View</button>  {chatroom.chatroom_name}</h2>
         <p>{chatroom.description}</p>
       </div>
     ))}

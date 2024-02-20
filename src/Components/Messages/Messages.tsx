@@ -1,8 +1,9 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { BACKEND_URL } from '../../constants';
-import { getUser, getRoom } from '../../variables';
+import { getUser, getRoom, setRoom } from '../../variables';
 
 // Type Declarations
 interface SendMessageFormProps {
@@ -46,6 +47,8 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
 }
 
 function Messages() {
+  const navigate = useNavigate();
+
   const chatroom: string = getRoom();
   const [error, setError] = useState('');
   const [msgs, setMsgs] = useState<Message[]>([]);
@@ -79,7 +82,7 @@ function Messages() {
   return (
     <div className="wrapper">
       <h1>
-        {chatroom}
+        {chatroom}  <button onClick={() => { setRoom(chatroom); navigate('/chatrooms'); }}>Return</button>
       </h1>
       {error && (
         <div className="error-message">
