@@ -1,4 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -12,6 +13,8 @@ interface LoginFormProps {
 
 
 function LoginForm({setError}: LoginFormProps) {
+  const navigate = useNavigate();
+
   const [name, setName] = useState('');
   const [pass, setPass] = useState('');
 
@@ -27,8 +30,13 @@ function LoginForm({setError}: LoginFormProps) {
     axios
       .get(`${BACKEND_URL}/login/` + name + '/' + pass)
       .then((response) => {
-        setUser(name);
-        setError('');
+        if ( response.data.message == 'true' ) {
+          setUser(name);
+          setError('Success! You can now send messages.');
+          navigate('/chatrooms');
+        } else {
+          setError('Login failed. Try again.');
+        }
       })
       .catch(() => {
         setError("Something went wrong.");
