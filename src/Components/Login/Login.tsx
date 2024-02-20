@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { BACKEND_URL } from '../../constants';
-import { setUser } from '../../var-store';
+import { setUser } from '../../variables';
 
 
 interface LoginFormProps {

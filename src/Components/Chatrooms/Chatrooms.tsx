@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 
 import { BACKEND_URL } from '../../constants';
-import { getUser } from '../../var-store';
+import { getUser, getRoom, setRoom } from '../../variables';
 
 // Type Declarations
 interface AddChatroomFormProps {
@@ -60,11 +60,10 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
 }
 
 function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
-  const [chatroom, setChatroom] = useState('');
   const [content, setContent] = useState('');
 
   const user: string = getUser();
-  const changeChatroom = (event: ChangeEvent<HTMLInputElement>) => { setChatroom(event.target.value); };
+  const chatroom: string = getRoom();
   const changeContent = (event: ChangeEvent<HTMLInputElement>) => { setContent(event.target.value); };
 
   const sendMessage = (event: FormEvent<HTMLFormElement>) => {
@@ -80,10 +79,6 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
 
   return (
     <form onSubmit={sendMessage}>
-      <label htmlFor="chatroom">
-        Chatroom
-      </label>
-      <input type="text" id="chatroom" value={chatroom} onChange={changeChatroom}/>
       <label htmlFor="content">
         Message
       </label>
@@ -166,7 +161,7 @@ function Chatrooms() {
     <SendMessageForm setError={setError} fetchMessages={(chatroom) => fetchMessages(chatroom)} />
     {chatrooms.map((chatroom) => (
       <div className="chatroom-container">
-        <h2>{chatroom.chatroom_name}<button onClick={() => fetchMessages(chatroom.chatroom_name)}></button></h2>
+        <h2>{chatroom.chatroom_name}<button onClick={() => { fetchMessages(chatroom.chatroom_name); setRoom(chatroom.chatroom_name); }}>View</button></h2>
         <p>{chatroom.description}</p>
       </div>
     ))}
