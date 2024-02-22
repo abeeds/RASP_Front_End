@@ -20,42 +20,6 @@ interface User {
   id: string;
 }
 
-
-function AddUserForm({ setError, fetchUsers }: AddUserFormProps) {
-  const [name, setName] = useState('');
-  const [pass, setPass] = useState('');
-
-  const changeName = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
-  const changePass = (event: ChangeEvent<HTMLInputElement>) => {
-    setPass(event.target.value);
-  };
-
-  const addUser = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    axios
-      .post(`${BACKEND_URL}/register/` + name + '/' + pass)
-      .then(() => {
-        setError('');
-        fetchUsers();
-      })
-      .catch((error) => {
-        setError(error.response.data.message);
-      });
-  };
-
-  return (
-    <form onSubmit={addUser}>
-      <label htmlFor="name">Name</label>
-      <input type="text" id="name" value={name} onChange={changeName} />
-      <label htmlFor="pass">Password (insecure)</label>
-      <input type="text" id="pass" value={pass} onChange={changePass} />
-      <button type="submit">Register</button>
-    </form>
-  );
-}
-
 function DelUserForm({ setError, fetchUsers }: DelUserFormProps) {
   const [name, setName] = useState('');
   const [pass, setPass] = useState('');
@@ -127,10 +91,9 @@ function Users() {
         {error}
         </div>
       )}
-    <AddUserForm setError={setError} fetchUsers={fetchUsers} />
     {users.map((user) => (
       <div className="user-container">
-        <h2>{user.username}</h2>
+        <p>{user.username}</p>
       </div>
     ))}
     <DelUserForm setError={setError} fetchUsers={fetchUsers} />

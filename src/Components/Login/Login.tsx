@@ -50,7 +50,7 @@ function LoginForm({setError}: LoginFormProps) {
     axios
       .post(`${BACKEND_URL}/register/` + name + '/' + pass)
       .then(() => {
-        setError("user added");
+        setError("ok");
       })
       .catch(() => {
         setError("Something went wrong.");
