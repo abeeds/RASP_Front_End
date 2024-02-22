@@ -49,8 +49,8 @@ function LoginForm({setError}: LoginFormProps) {
     console.log(event);
     axios
       .post(`${BACKEND_URL}/register/` + name + '/' + pass)
-      .then(() => {
-        setError("ok");
+      .then((response) => {
+        setError(response.data.message);
       })
       .catch(() => {
         setError("Something went wrong.");
