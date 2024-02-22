@@ -27,6 +27,7 @@ function LoginForm({setError}: LoginFormProps) {
 
   const logIn = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(event);
     axios
       .get(`${BACKEND_URL}/login/` + name + '/' + pass)
       .then((response) => {
@@ -43,6 +44,20 @@ function LoginForm({setError}: LoginFormProps) {
       });
   };
 
+  const register = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(event);
+    axios
+      .post(`${BACKEND_URL}/register/` + name + '/' + pass)
+      .then(() => {
+        setError("user added");
+      })
+      .catch(() => {
+        setError("Something went wrong.");
+      });
+  };
+
+
   return (
     <form onSubmit={logIn}>
       <label htmlFor="name">Name</label>
@@ -50,6 +65,7 @@ function LoginForm({setError}: LoginFormProps) {
       <label htmlFor="pass">Password (insecure)</label>
       <input type="text" id="pass" value={pass} onChange={changePass} />
       <button type="submit">Login</button>
+      <button type="button" onClick={() => register(event) }>Register</button>
     </form>
   );
 }
