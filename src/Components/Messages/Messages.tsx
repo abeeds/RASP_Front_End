@@ -26,7 +26,7 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
 
   const sendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios.post(`${BACKEND_URL}/write_msg`, { room: chatroom, username: user, content: content } )
+    axios.post(`${BACKEND_URL}/write_msg`, { chatroom_name: chatroom, username: user, content: content } )
       .then(() => {
         setError('');
         setContent('');
