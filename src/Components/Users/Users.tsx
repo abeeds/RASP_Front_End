@@ -5,11 +5,6 @@ import axios from 'axios';
 import { BACKEND_URL } from '../../constants';
 
 
-interface AddUserFormProps {
-  setError: (error: string) => void;
-  fetchUsers: () => void;
-}
-
 interface DelUserFormProps {
   setError: (error: string) => void;
   fetchUsers: () => void;
@@ -34,7 +29,7 @@ function DelUserForm({ setError, fetchUsers }: DelUserFormProps) {
   const delUser = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios
-      .delete(`${BACKEND_URL}/deactivate/` + name)
+      .delete(`${BACKEND_URL}/deactivate/` + name + '/' + pass)
       .then(() => {
         setError('');
         fetchUsers();
@@ -48,9 +43,9 @@ function DelUserForm({ setError, fetchUsers }: DelUserFormProps) {
     <form onSubmit={delUser}>
       <label htmlFor="name">Name</label>
       <input type="text" id="name" value={name} onChange={changeName} />
-      <label htmlFor="pass">Password which will not be checked/verified</label>
+      <label htmlFor="pass">Password(insecure)</label>
       <input type="text" id="pass" value={pass} onChange={changePass} />
-      <button type="submit">!!CAUTION!! delete forever and ever</button>
+      <button type="submit">Deactivate Account</button>
     </form>
   );
 }
