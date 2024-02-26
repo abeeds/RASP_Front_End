@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
-import { BACKEND_URL } from '../../constants';
-import { setUser } from '../../variables';
+import { BACKEND_URL, ADMIN_KEY } from '../../constants';
+import { setUser, setAdmin } from '../../variables';
 
 
 interface LoginFormProps {
@@ -27,7 +27,10 @@ function LoginForm({setError}: LoginFormProps) {
 
   const logIn = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(event);
+    if ( name === 'admin' && pass === ADMIN_KEY ) {
+      setAdmin();
+      navigate('/admin');
+    }
     axios
       .get(`${BACKEND_URL}/login/` + name + '/' + pass)
       .then((response) => {

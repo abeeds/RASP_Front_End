@@ -3,6 +3,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 
 import { BACKEND_URL } from '../../constants';
+import { getAdmin } from '../../variables';
 
 
 interface DelUserFormProps {
@@ -40,20 +41,37 @@ function DelUserForm({ setError }: DelUserFormProps) {
 function Admin() {
   const [error, setError] = useState('');
 
-  return (
-    <div className="wrapper">
-      <h1>
-        Admin Actions
-      </h1>
-      {error && (
-        <div className="error-message">
-        {error}
-        </div>
-      )}
-    <hr></hr>
-    <DelUserForm setError={setError} />
-    </div>
-  );
+  if ( getAdmin() ) {
+    return (
+      <div className="wrapper">
+        <h1>
+          Admin Actions
+        </h1>
+        {error && (
+          <div className="error-message">
+          {error}
+          </div>
+        )}
+      <hr></hr>
+      <DelUserForm setError={setError} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="wrapper">
+        <h1>
+          Admin Actions
+        </h1>
+        {error && (
+          <div className="error-message">
+          {error}
+          </div>
+        )}
+      <hr></hr>
+      <h3>You do not have permission to view this page.</h3>
+      </div>
+    );
+  }
 }
 
 export default Admin;
