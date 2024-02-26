@@ -7,6 +7,7 @@ interface Page {
 
 const PAGES: Page[] = [
   { label: 'Users', destination: '/users'},
+  { label: 'Admin', destination: '/admin'},
   //{ label: 'Chatrooms', destination: '/chatrooms'},
 ]
 
