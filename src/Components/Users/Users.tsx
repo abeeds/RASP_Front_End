@@ -91,6 +91,7 @@ function Users() {
         <p>{user.username}</p>
       </div>
     ))}
+    <hr></hr>
     <DelUserForm setError={setError} fetchUsers={fetchUsers} />
     </div>
   );
