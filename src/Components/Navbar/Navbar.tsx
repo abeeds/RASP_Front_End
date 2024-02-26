@@ -11,7 +11,7 @@ const PAGES: Page[] = [
   //{ label: 'Chatrooms', destination: '/chatrooms'},
 ]
 
-const home_url: string = "/login";
+const home_url: string = "/";
 
 function Navbar() {
 
