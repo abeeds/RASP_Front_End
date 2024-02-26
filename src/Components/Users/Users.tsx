@@ -30,8 +30,8 @@ function DelUserForm({ setError, fetchUsers }: DelUserFormProps) {
     event.preventDefault();
     axios
       .delete(`${BACKEND_URL}/deactivate/` + name + '/' + pass)
-      .then(() => {
-        setError('');
+      .then((response) => {
+        setError(response.data.message);
         fetchUsers();
       })
       .catch((error) => {
@@ -43,7 +43,7 @@ function DelUserForm({ setError, fetchUsers }: DelUserFormProps) {
     <form onSubmit={delUser}>
       <label htmlFor="name">Name</label>
       <input type="text" id="name" value={name} onChange={changeName} />
-      <label htmlFor="pass">Password(insecure)</label>
+      <label htmlFor="pass">Password (insecure)</label>
       <input type="text" id="pass" value={pass} onChange={changePass} />
       <button type="submit">Deactivate Account</button>
     </form>
