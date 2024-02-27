@@ -1,6 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { BACKEND_URL } from '../../constants';
 import { setRoom } from '../../variables';
@@ -83,7 +84,7 @@ function Chatrooms() {
 
   return (
     <div className="wrapper">
-      <h1>
+      <h1 className='chatroom-label'>
         Chatrooms
       </h1>
       {error && (
@@ -91,12 +92,28 @@ function Chatrooms() {
         {error}
         </div>
       )}
-    {chatrooms.map((chatroom) => (
-      <div className="chatroom-container">
-        <h2><button onClick={() => { setRoom(chatroom.chatroom_name); navigate('/messages'); }}>View</button>  {chatroom.chatroom_name}</h2>
-        <p>{chatroom.description}</p>
-      </div>
-    ))}
+    <div className='chatroom-display'>
+      {chatrooms.map(
+        (chatroom) => (
+
+          <Link 
+            to={`/messages/`} 
+            onClick={() => {
+              setRoom(chatroom.chatroom_name);
+              navigate('/messages');
+            }}
+            style={{ textDecoration: 'none' }}
+          >
+            <div className="chatroom-cont">
+              <h2>
+                {chatroom.chatroom_name}
+              </h2>
+              <p>{chatroom.description}</p>
+            </div>
+          </Link>
+        ))
+      }
+    </div>
     <hr></hr>
     <AddChatroomForm setError={setError} fetchChatrooms={fetchChatrooms} />
     </div>
