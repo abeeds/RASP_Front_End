@@ -44,7 +44,7 @@ function DelUserForm({ setError, fetchUsers }: DelUserFormProps) {
       <label htmlFor="name">Name</label>
       <input type="text" id="name" value={name} onChange={changeName} />
       <label htmlFor="pass">Password (insecure)</label>
-      <input type="text" id="pass" value={pass} onChange={changePass} />
+      <input type="password" id="pass" value={pass} onChange={changePass} />
       <button type="submit">Deactivate Account</button>
     </form>
   );
