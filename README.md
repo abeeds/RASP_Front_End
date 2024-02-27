@@ -31,4 +31,6 @@ export default {
 
 ## Build and Run
 - install packages with `npm install`
-- run front-end with `npm run dev`
+- if running local backend server run `./local.sh` to run the frontend
+- if running cloud backend server run `./cloud.sh' to run the frontend
+
