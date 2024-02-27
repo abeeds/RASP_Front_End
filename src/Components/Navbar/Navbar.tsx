@@ -42,6 +42,7 @@ function Navbar() {
             
             {/* Right side of navbar*/}
             <div className="navbar-nav">
+              <a className="nav-item nav-link" href="/login">Log In</a>
             </div>
           </div>
         </div>

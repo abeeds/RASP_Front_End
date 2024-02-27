@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="" element={<Login/>} />
+        <Route path="login" element={<Login/>} />
         <Route path="users" element={<Users/>} />
         <Route path="chatrooms" element={<Chatrooms/>} />
         <Route path="messages" element={<Messages/>} />
