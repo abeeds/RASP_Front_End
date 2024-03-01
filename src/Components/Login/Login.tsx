@@ -20,13 +20,7 @@ function LoginForm({setError}: LoginFormProps) {
   const [passConfirm, setPassConfirm] = useState('');
   const [loginOrReg, setLoginOrReg] = useState(false);
 
-  const setToReg = () => {
-    setLoginOrReg(true);
-  }
-  const setToLogIn = () => {
-    setLoginOrReg(false);
-  }
-
+  // handles fields of the forms
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
@@ -35,7 +29,15 @@ function LoginForm({setError}: LoginFormProps) {
   };
   const changePassConfirm = (event: ChangeEvent<HTMLInputElement>) => {
     setPassConfirm(event.target.value);
-  };
+  }; // specifically used in the register form
+
+  // handles whether login or register form is shown in return statement
+  const setToReg = () => {
+    setLoginOrReg(true);
+  }
+  const setToLogIn = () => {
+    setLoginOrReg(false);
+  }
 
   const logIn = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
