@@ -17,12 +17,24 @@ function LoginForm({setError}: LoginFormProps) {
 
   const [name, setName] = useState('');
   const [pass, setPass] = useState('');
+  const [passConfirm, setPassConfirm] = useState('');
+  const [loginOrReg, setLoginOrReg] = useState(false);
+
+  const setToReg = () => {
+    setLoginOrReg(true);
+  }
+  const setToLogIn = () => {
+    setLoginOrReg(false);
+  }
 
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
   const changePass = (event: ChangeEvent<HTMLInputElement>) => {
     setPass(event.target.value);
+  };
+  const changePassConfirm = (event: ChangeEvent<HTMLInputElement>) => {
+    setPassConfirm(event.target.value);
   };
 
   const logIn = (event: FormEvent<HTMLFormElement>) => {
@@ -48,28 +60,54 @@ function LoginForm({setError}: LoginFormProps) {
   };
 
   const register = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(event);
-    axios
-      .post(`${BACKEND_URL}/register/` + name + '/' + pass)
-      .then((response) => {
-        setError(response.data.message);
-      })
-      .catch(() => {
-        setError("Something went wrong.");
-      });
+    if(pass == passConfirm) {
+      event.preventDefault();
+      console.log(event);
+      axios
+        .post(`${BACKEND_URL}/register/` + name + '/' + pass)
+        .then((response) => {
+          setError(response.data.message);
+        })
+        .catch(() => {
+          setError("Something went wrong.");
+        });
+      }
   };
-
-
+  
   return (
-    <form onSubmit={logIn}>
-      <label htmlFor="name">Name</label>
-      <input type="text" id="name" value={name} onChange={changeName} />
-      <label htmlFor="pass">Password (insecure)</label>
-      <input type="password" id="pass" value={pass} onChange={changePass} />
-      <button type="submit">Login</button>
-      <button type="button" onClick={() => register(event) }>Register</button>
-    </form>
+    <>
+      
+      {loginOrReg ? (
+          <>
+          <h1>Register</h1>
+          <button onClick={setToLogIn}>Login Instead</button>
+          <form onSubmit={register}>
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" value={name} onChange={changeName} />
+            <label htmlFor="pass">Password (insecure)</label>
+            <input type="password" id="pass" value={pass} onChange={changePass} />
+            <label htmlFor="pass">Confirm Password (insecure)</label>
+            <input type="password" id="passConfirm" value={passConfirm} onChange={changePassConfirm} />
+            <button type="submit">Register</button>
+          </form>
+          </>
+        ) : 
+        (
+          <>
+          <h1>Login</h1>
+          <button onClick={setToReg}>Register Instead</button>
+          <form onSubmit={logIn}>
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" value={name} onChange={changeName} />
+            <label htmlFor="pass">Password (insecure)</label>
+            <input type="password" id="pass" value={pass} onChange={changePassConfirm} />
+            <button type="submit">Login</button>
+          </form>
+          </>
+        )
+      }
+      
+    </>
   );
 }
 
@@ -78,9 +116,6 @@ function Login() {
 
   return (
     <div className="wrapper">
-      <h1>
-        Login
-      </h1>
       {error && (
         <div className="error-message">
         {error}
