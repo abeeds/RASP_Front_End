@@ -2,7 +2,8 @@
 - Write a home page greeting the user
 - Add polling for messages page to display new messages in real time
     - might cause problems with the mongodb free tier limits
-- Have login and register change the form being shown in Login.tsx
+- Login and Register forms are separated but if the passwords don't match in
+  the register form, it reloads to the login form 
 - Improve CSS in messages page
     - also need to reformat the date for the front end
     - adjust timezone maybe
