@@ -6,6 +6,12 @@ import { BACKEND_URL } from '../../constants';
 import { getAdmin } from '../../variables';
 
 
+type ChatroomsData = {
+  [chatroomName: string]: {
+    description: string;
+  };
+};
+
 interface DelUserFormProps {
   setError: (error: string) => void;
 }
@@ -45,9 +51,18 @@ function DelUserForm({ setError }: DelUserFormProps) {
 function UpdateRoomForm({ setError }: UpdateRoomFormProps) {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
+  const [chatroomsObject, setChatroomsObject] = useState<ChatroomsData>({});
 
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
+    axios.get(`${BACKEND_URL}/get_chatrooms`)
+      .then((response) => {
+        setChatroomsObject(response.data);
+      })
+      .catch(() => {
+        setError('Something went wrong');
+      });
     setName(event.target.value);
+    setDesc(chatroomsObject[event.target.value].description);
   };
 
   const changeDesc = (event: ChangeEvent<HTMLInputElement>) => {
