@@ -10,6 +10,10 @@ interface DelUserFormProps {
   setError: (error: string) => void;
 }
 
+interface UpdateRoomFormProps {
+  setError: (error: string) => void;
+}
+
 function DelUserForm({ setError }: DelUserFormProps) {
   const [name, setName] = useState('');
 
@@ -38,6 +42,41 @@ function DelUserForm({ setError }: DelUserFormProps) {
   );
 }
 
+function UpdateRoomForm({ setError }: UpdateRoomFormProps) {
+  const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
+
+  const changeName = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
+  const changeDesc = (event: ChangeEvent<HTMLInputElement>) => {
+    setDesc(event.target.value);
+  };
+
+  const updateDesc = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    axios
+      .put(`${BACKEND_URL}/update_chatroom_desc/` + name + '/' + desc)
+      .then((response) => {
+        setError(response.data.message);
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+      });
+  };
+
+  return (
+    <form onSubmit={updateDesc}>
+      <label htmlFor="name">Chatroom</label>
+      <input type="text" id="name" value={name} onChange={changeName} />
+      <label htmlFor="name">New Description</label>
+      <input type="text" id="desc" value={desc} onChange={changeDesc} />
+      <button type="submit">Update</button>
+    </form>
+  );
+}
+
 function Admin() {
   const [error, setError] = useState('');
 
@@ -54,6 +93,8 @@ function Admin() {
         )}
       <hr></hr>
       <DelUserForm setError={setError} />
+      <hr></hr>
+      <UpdateRoomForm setError={setError} />
       </div>
     );
   } else {
