@@ -62,9 +62,9 @@ function LoginForm({setError}: LoginFormProps) {
   };
 
   const register = (event: FormEvent<HTMLFormElement>) => {
-    if(pass == passConfirm) {
       event.preventDefault();
       console.log(event);
+    if(pass == passConfirm) {
       axios
         .post(`${BACKEND_URL}/register/` + name + '/' + pass)
         .then((response) => {
@@ -74,6 +74,9 @@ function LoginForm({setError}: LoginFormProps) {
           setError("Something went wrong.");
         });
       }
+    else {
+      setError("Passwords do not match. Please try again.")
+    }
   };
   
   return (
