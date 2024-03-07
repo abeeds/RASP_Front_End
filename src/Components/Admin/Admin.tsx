@@ -20,6 +20,11 @@ interface UpdateRoomFormProps {
   setError: (error: string) => void;
 }
 
+interface Chatroom {
+  chatroom_name: string;
+  description: string;
+}
+
 function DelUserForm({ setError }: DelUserFormProps) {
   const [name, setName] = useState('');
 
@@ -72,7 +77,7 @@ function UpdateRoomForm({ setError }: UpdateRoomFormProps) {
   const updateDesc = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios
-      .put(`${BACKEND_URL}/update_chatroom_desc/` + name + '/' + desc)
+      .put(`${BACKEND_URL}/update_chatroom_desc`, { chatroom_name: name, description: desc })
       .then((response) => {
         setError(response.data.message);
       })
