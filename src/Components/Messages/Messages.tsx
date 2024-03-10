@@ -50,6 +50,7 @@ function Messages() {
   const navigate = useNavigate();
 
   const chatroom: string = getRoom();
+  const user: string = getUser();
   const [error, setError] = useState('');
   const [msgs, setMsgs] = useState<Message[]>([]);
 
@@ -91,8 +92,19 @@ function Messages() {
       )}
     {msgs.map((msg) => (
       <div>
-        <h5>{msg.user} at {msg.timestamp} said:</h5>
-        <p>{msg.content}</p>
+        { msg.user === user ? (
+        <>
+          <h5>{msg.user} <button></button> at {msg.timestamp} said:</h5>
+          <p>{msg.content}</p>
+        </>
+        ) :
+        (
+        <>
+          <h5>{msg.user} at {msg.timestamp} said:</h5>
+          <p>{msg.content}</p>
+        </>
+        )
+      }
       </div>
     ))}
     <hr></hr>
