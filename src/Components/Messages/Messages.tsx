@@ -59,7 +59,6 @@ function Messages() {
     axios.get(`${BACKEND_URL}/get_msgs/` + chatroom)
       .then((response) => {
         const msgsObject = response.data;
-        console.log(response.data);
         const keys = Object.keys(msgsObject);
         const msgsArray = keys.map((key) => ([
           key,
@@ -73,7 +72,6 @@ function Messages() {
           user,
           content
         }));
-        console.log(msgsFetch);
         setMsgs(msgsFetch);
       })
       .catch(() => { setError('oopsie woopsie'); });
@@ -82,6 +80,14 @@ function Messages() {
   useEffect(
     fetchMessages,
   );
+
+  const deleteMessage = (msgKey: string) => {
+    axios.delete(`${BACKEND_URL}/delete_msg/` + msgKey)
+      .then(() => {
+        setError('');
+      })
+      .catch((error) => { setError(error.response.data.message); });
+  }
 
   return (
     <div className="wrapper">
@@ -97,8 +103,8 @@ function Messages() {
       <div>
         { msg.user === user ? (
         <>
-          <h5>{msg.user} <button></button> at {msg.timestamp} said:</h5>
-          <p>{msg.key} : {msg.content}</p>
+          <h5>{msg.user} <button onClick={() => {deleteMessage(msg.key)}}></button> at {msg.timestamp} said:</h5>
+          <p>{msg.content}</p>
         </>
         ) :
         (
