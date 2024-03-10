@@ -12,6 +12,7 @@ interface SendMessageFormProps {
 }
 
 interface Message {
+  key: string;
   timestamp: string;
   user: string;
   content: string;
@@ -61,11 +62,13 @@ function Messages() {
         console.log(response.data);
         const keys = Object.keys(msgsObject);
         const msgsArray = keys.map((key) => ([
+          key,
           msgsObject[key].Timestamp,
           msgsObject[key].User,
           msgsObject[key].Content
         ]));
-        const msgsFetch: Message[] = msgsArray.map(([timestamp, user, content]) => ({
+        const msgsFetch: Message[] = msgsArray.map(([key, timestamp, user, content]) => ({
+          key,
           timestamp,
           user,
           content
@@ -95,7 +98,7 @@ function Messages() {
         { msg.user === user ? (
         <>
           <h5>{msg.user} <button></button> at {msg.timestamp} said:</h5>
-          <p>{msg.content}</p>
+          <p>{msg.key} : {msg.content}</p>
         </>
         ) :
         (
