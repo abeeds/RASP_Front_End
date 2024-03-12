@@ -103,7 +103,7 @@ function Messages() {
       <div>
         { msg.user === user ? (
         <>
-          <h5>{msg.user} <button onClick={() => {deleteMessage(msg.key)}}></button> at {msg.timestamp} said:</h5>
+          <h5>{msg.user} at {msg.timestamp} said: <i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
           <p>{msg.content}</p>
         </>
         ) :

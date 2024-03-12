@@ -85,7 +85,6 @@ function LoginForm({setError}: LoginFormProps) {
       {loginOrReg ? (
           <>
           <h1>Register</h1>
-          <button onClick={setToLogIn}>Login Instead</button>
           <form onSubmit={register}>
             <label htmlFor="name">Name</label>
             <input type="text" id="name" value={name} onChange={changeName} />
@@ -93,20 +92,19 @@ function LoginForm({setError}: LoginFormProps) {
             <input type="password" id="pass" value={pass} onChange={changePass} />
             <label htmlFor="pass">Confirm Password (insecure)</label>
             <input type="password" id="passConfirm" value={passConfirm} onChange={changePassConfirm} />
-            <button type="submit">Register</button>
+            <button type="button" onClick={setToLogIn}>Login</button><button type="submit">Submit</button> 
           </form>
           </>
         ) : 
         (
           <>
           <h1>Login</h1>
-          <button onClick={setToReg}>Register Instead</button>
           <form onSubmit={logIn}>
             <label htmlFor="name">Name</label>
             <input type="text" id="name" value={name} onChange={changeName} />
             <label htmlFor="pass">Password (insecure)</label>
             <input type="password" id="pass" value={pass} onChange={changePass} />
-            <button type="submit">Login</button>
+            <button type="button" onClick={setToReg}>Register</button><button type="submit">Submit</button> 
           </form>
           </>
         )
