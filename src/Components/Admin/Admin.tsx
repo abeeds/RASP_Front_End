@@ -20,6 +20,10 @@ interface UpdateRoomFormProps {
   setError: (error: string) => void;
 }
 
+interface WipeFormProps {
+  setError: (error: string) => void;
+}
+
 interface Chatroom {
   chatroom_name: string;
   description: string;
@@ -97,6 +101,50 @@ function UpdateRoomForm({ setError }: UpdateRoomFormProps) {
   );
 }
 
+function WipeForm({ setError }: WipeFormProps) {
+  const [isHidden, setIsHidden] = useState(true);
+  const [collection, setCollection] = useState('');
+  const [code, setCode] = useState('');
+
+  const toggleForm = (): void => {
+    setIsHidden(!isHidden);
+  };
+
+  const changeCollection = (event: ChangeEvent<HTMLInputElement>) => {
+    setCollection(event.target.value);
+  };
+
+  const changeCode = (event: ChangeEvent<HTMLInputElement>) => {
+    setCode(event.target.value);
+  };
+
+  const confirmWipe = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    axios.delete(`${BACKEND_URL}/wipe/` + collection + '/' + code)
+      .then((response) => {
+        setError(response.data.message);
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+      });
+  };
+
+  return (
+    <div>
+      <button onClick={toggleForm}>Wipe</button>
+      { !isHidden && (
+        <form onSubmit={confirmWipe}>
+          <label htmlFor="collection">Collection</label>
+          <input type="text" id="collection" value={collection} onChange={changeCollection} />
+          <label htmlFor="code">Code</label>
+          <input type="text" id="code" value={code} onChange={changeCode} />
+          <button type="submit">Nuke!</button>
+        </form>
+      )}
+    </div>
+  );
+}
+
 function Admin() {
   const [error, setError] = useState('');
 
@@ -115,6 +163,8 @@ function Admin() {
       <DelUserForm setError={setError} />
       <hr></hr>
       <UpdateRoomForm setError={setError} />
+      <hr></hr>
+      <WipeForm setError={setError} />
       </div>
     );
   } else {
