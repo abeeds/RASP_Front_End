@@ -1,4 +1,5 @@
 // import { Link } from 'react-router-dom'
+import { getUser } from '../../variables';
 
 interface Page {
   destination: string;
@@ -42,7 +43,17 @@ function Navbar() {
             
             {/* Right side of navbar*/}
             <div className="navbar-nav">
-              <a className="nav-item nav-link" href="/login">Log In</a>
+              { getUser() === '' ? (
+                  <>
+                    <a className="nav-item nav-link" href="/login">Log In</a>
+                  </>
+                ) :
+                (
+                  <>
+                    <a className="nav-item nav-link" href="/chatrooms">{getUser()}</a>
+                  </>
+                )
+              }
             </div>
           </div>
         </div>
