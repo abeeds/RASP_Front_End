@@ -13,7 +13,7 @@ interface SendMessageFormProps {
 
 interface Message {
   key: string;
-  timestamp: string;
+  timestamp: number;
   user: string;
   content: string;
 }
@@ -45,6 +45,18 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
       <button type="submit">Send</button>
     </form>
   );
+}
+
+function formatTimestamp(timestamp: number): string {
+  const date: Date = new Date(timestamp * 1000);
+  const month: string = String(date.getMonth() + 1).padStart(2,'0');
+  const day: string = String(date.getDate()).padStart(2,'0');
+  const year: number = date.getFullYear();
+  const hours: string = String(date.getHours()).padStart(2,'0');
+  const minutes: string = String(date.getMinutes()).padStart(2,'0');
+  const seconds: string = String(date.getSeconds()).padStart(2,'0');
+
+  return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
 function Messages() {
@@ -103,13 +115,13 @@ function Messages() {
       <div>
         { msg.user === user ? (
         <>
-          <h5>{msg.user} at {msg.timestamp} said: <i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
+          <h5>{msg.user} at {formatTimestamp(msg.timestamp)} said: <i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
           <p>{msg.content}</p>
         </>
         ) :
         (
         <>
-          <h5>{msg.user} at {msg.timestamp} said:</h5>
+          <h5>{msg.user} at {formatTimestamp(msg.timestamp)} said:</h5>
           <p>{msg.content}</p>
         </>
         )
