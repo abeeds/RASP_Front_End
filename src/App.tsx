@@ -4,6 +4,8 @@ import {
   Route,
 } from 'react-router-dom'
 
+import { useState, useEffect } from 'react';
+
 import './App.css';
 
 import Navbar from './Components/Navbar';
@@ -15,6 +17,15 @@ import Admin from './Components/Admin';
 import Account from './Components/Account';
 
 function App() {
+  const [time, setTime] = useState<Date>(new Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
   return (
     <BrowserRouter>
       <Navbar />
