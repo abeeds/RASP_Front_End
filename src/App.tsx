@@ -12,6 +12,7 @@ import Users from './Components/Users';
 import Chatrooms from './Components/Chatrooms';
 import Messages from './Components/Messages';
 import Admin from './Components/Admin';
+import Account from './Components/Account';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="chatrooms" element={<Chatrooms/>} />
         <Route path="messages" element={<Messages/>} />
         <Route path="admin" element={<Admin/>} />
+        <Route path="account" element={<Account/>} />
       </Routes>
     </BrowserRouter>
   );

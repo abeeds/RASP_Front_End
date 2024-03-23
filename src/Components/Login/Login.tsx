@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { BACKEND_URL, ADMIN_KEY } from '../../constants';
-import { setUser, setAdmin } from '../../variables';
+import { setAdmin } from '../../variables';
 
 
 interface LoginFormProps {
@@ -49,7 +49,6 @@ function LoginForm({setError}: LoginFormProps) {
       .get(`${BACKEND_URL}/login/` + name + '/' + pass)
       .then((response) => {
         if ( response.data.message == 'true' ) {
-          // setUser(name);
           localStorage.setItem('user', name);
           setError('Success! You can now send messages.');
           navigate('/chatrooms');

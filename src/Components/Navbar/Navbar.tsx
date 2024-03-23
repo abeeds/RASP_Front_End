@@ -1,5 +1,4 @@
 // import { Link } from 'react-router-dom'
-import { getUser } from '../../variables';
 
 interface Page {
   destination: string;
@@ -9,7 +8,7 @@ interface Page {
 const PAGES: Page[] = [
   { label: 'Users', destination: '/users'},
   { label: 'Admin', destination: '/admin'},
-  //{ label: 'Chatrooms', destination: '/chatrooms'},
+  { label: 'Chatrooms', destination: '/chatrooms'},
 ]
 
 const home_url: string = "/";
@@ -43,14 +42,14 @@ function Navbar() {
             
             {/* Right side of navbar*/}
             <div className="navbar-nav">
-              { getUser() === '' ? (
+              { localStorage.getItem('user') == null ? (
                   <>
                     <a className="nav-item nav-link" href="/login">Log In</a>
                   </>
                 ) :
                 (
                   <>
-                    <a className="nav-item nav-link" href="/chatrooms">{getUser()}</a>
+                    <a className="nav-item nav-link" href="/account">{localStorage.getItem('user')}</a>
                   </>
                 )
               }

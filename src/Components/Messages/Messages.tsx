@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { BACKEND_URL } from '../../constants';
-import { getUser, getRoom, setRoom } from '../../variables';
+import { getRoom, setRoom } from '../../variables';
 
 // Type Declarations
 interface SendMessageFormProps {
@@ -21,7 +21,6 @@ interface Message {
 function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
   const [content, setContent] = useState('');
 
-  // const user: string = getUser();
   const user: string = localStorage.getItem('user');
   const chatroom: string = getRoom();
   const changeContent = (event: ChangeEvent<HTMLInputElement>) => { setContent(event.target.value); };
@@ -64,7 +63,6 @@ function Messages() {
   const navigate = useNavigate();
 
   const chatroom: string = getRoom();
-  // const user: string = getUser();
   const user: string = localStorage.getItem('user');
   const [error, setError] = useState('');
   const [msgs, setMsgs] = useState<Message[]>([]);
