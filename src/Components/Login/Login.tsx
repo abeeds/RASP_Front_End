@@ -49,7 +49,8 @@ function LoginForm({setError}: LoginFormProps) {
       .get(`${BACKEND_URL}/login/` + name + '/' + pass)
       .then((response) => {
         if ( response.data.message == 'true' ) {
-          setUser(name);
+          // setUser(name);
+          localStorage.setItem('user', name);
           setError('Success! You can now send messages.');
           navigate('/chatrooms');
         } else {
