@@ -33,7 +33,7 @@ html {
   text-decoration: underline;
 }
 
-.wrapper {
+.wrapper  {
   max-width: min(800px, 100% - 4rem);
   margin-inline: auto;
   clear: both;
@@ -154,4 +154,41 @@ form button[type=button]:hover {
 
 .chatroom-label {
   text-align: center;
+}
+
+.messages {
+   background-color: #1f1f1f;
+   padding: 10px;
+   border-radius: 15px;
+}
+
+.msg_desc {
+  display: flex;
+  align-items: center;
+}
+
+.messages .spacing {
+  padding: 5px;
+}
+
+.messages p {
+  color: white
+}
+
+.messages h1, h5{
+  color: white
+}
+
+.messages h5, h6 {
+  align-self: flex-end;
+}
+
+.messages h6 {
+  color: gray;
+  font-size: 75%;
+}
+
+.trash_icon {
+  color: rgb(209, 209, 209);
+  font-size: 90%;
 }

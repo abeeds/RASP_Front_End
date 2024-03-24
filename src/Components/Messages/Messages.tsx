@@ -21,7 +21,7 @@ interface Message {
 function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
   const [content, setContent] = useState('');
 
-  const user: string = localStorage.getItem('user');
+  const user = localStorage.getItem('user');
   const chatroom: string = getRoom();
   const changeContent = (event: ChangeEvent<HTMLInputElement>) => { setContent(event.target.value); };
 
@@ -63,7 +63,7 @@ function Messages() {
   const navigate = useNavigate();
 
   const chatroom: string = getRoom();
-  const user: string = localStorage.getItem('user');
+  const user = localStorage.getItem('user');
   const [error, setError] = useState('');
   const [msgs, setMsgs] = useState<Message[]>([]);
 
@@ -106,28 +106,41 @@ function Messages() {
       <h1>
         {chatroom}  <button onClick={() => { setRoom(chatroom); navigate('/chatrooms'); }}>Return</button>
       </h1>
-      {error && (
-        <div className="error-message">
-        {error}
+        {error && (
+          <div className="error-message">
+          {error}
+          </div>
+        )}
+
+      <div className='messages'>
+      {msgs.map((msg) => (
+        <div>
+          { msg.user === user ? (
+          <>
+            <div className='msg_desc'>
+              <h5>{msg.user}</h5> 
+              <div className='spacing'/>
+              <h6>{formatTimestamp(msg.timestamp)}</h6>
+              <div className='spacing'/>
+              <h5 className='trash_icon'><i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
+            </div>
+            <p>{msg.content}</p>
+          </>
+          ) :
+          (
+          <>
+            <div className='msg_desc'>
+              <h5>{msg.user}</h5> 
+              <div className='spacing'></div>
+              <h6>{formatTimestamp(msg.timestamp)}</h6>
+            </div>
+            <p>{msg.content}</p>
+          </>
+          )
+        }
         </div>
-      )}
-    {msgs.map((msg) => (
-      <div>
-        { msg.user === user ? (
-        <>
-          <h5>{msg.user} at {formatTimestamp(msg.timestamp)} said: <i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
-          <p>{msg.content}</p>
-        </>
-        ) :
-        (
-        <>
-          <h5>{msg.user} at {formatTimestamp(msg.timestamp)} said:</h5>
-          <p>{msg.content}</p>
-        </>
-        )
-      }
-      </div>
-    ))}
+      ))}
+    </div>
     <hr></hr>
     <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} />
     </div>
