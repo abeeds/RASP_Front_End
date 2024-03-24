@@ -17,6 +17,7 @@ function LoginForm({setError}: LoginFormProps) {
 
   const [name, setName] = useState('');
   const [pass, setPass] = useState('');
+  const [passReg, setPassReg] = useState('');
   const [passConfirm, setPassConfirm] = useState('');
   const [loginOrReg, setLoginOrReg] = useState(false);
 
@@ -26,6 +27,9 @@ function LoginForm({setError}: LoginFormProps) {
   };
   const changePass = (event: ChangeEvent<HTMLInputElement>) => {
     setPass(event.target.value);
+  };
+  const changePassReg = (event: ChangeEvent<HTMLInputElement>) => {
+    setPassReg(event.target.value);
   };
   const changePassConfirm = (event: ChangeEvent<HTMLInputElement>) => {
     setPassConfirm(event.target.value);
@@ -64,9 +68,9 @@ function LoginForm({setError}: LoginFormProps) {
   const register = (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       console.log(event);
-    if(pass == passConfirm) {
+    if(passReg == passConfirm) {
       axios
-        .post(`${BACKEND_URL}/register/` + name + '/' + pass)
+        .post(`${BACKEND_URL}/register/` + name + '/' + passReg)
         .then((response) => {
           setError(response.data.message);
         })
@@ -89,7 +93,7 @@ function LoginForm({setError}: LoginFormProps) {
             <label htmlFor="name">Name</label>
             <input type="text" id="name" value={name} onChange={changeName} />
             <label htmlFor="pass">Password (insecure)</label>
-            <input type="password" id="pass" value={pass} onChange={changePass} />
+            <input type="password" id="pass" value={passReg} onChange={changePassReg} />
             <label htmlFor="pass">Confirm Password (insecure)</label>
             <input type="password" id="passConfirm" value={passConfirm} onChange={changePassConfirm} />
             <button type="button" onClick={setToLogIn}>Login</button><button type="submit">Submit</button> 
