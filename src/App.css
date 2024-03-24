@@ -9,6 +9,8 @@ html {
   --buff: hsla(27, 64%, 65%, 1);
   --bistre: hsla(10, 31%, 19%, 1);
   --white: rgb(255, 255, 255);
+  --bg_color: rgb(26, 26, 26);
+  --bg_hover: #292929;
 
   --background-color: var(--white);
   --accent-color: var(--dark);
@@ -128,7 +130,7 @@ form button[type=button]:hover {
 
 /*----Chatrooms----*/
 .chatroom-display {
-  background-color: rgb(26, 26, 26);
+  background-color: var(--bg_color);
   border-radius: 15px;
   margin: 20px
 }
@@ -148,7 +150,7 @@ form button[type=button]:hover {
 }
 
 .chatroom-cont:hover {
-  background-color: #6e6e6e;
+  background-color: var(--bg_hover);
   text-decoration: none;
 }
 
@@ -158,7 +160,7 @@ form button[type=button]:hover {
 
 /*----Messages----*/
 .messages {
-   background-color: #1f1f1f;
+   background-color: var(--bg_color);
    padding-top: 10px;
    padding-bottom: 10px;
    border-radius: 15px;
@@ -199,6 +201,7 @@ form button[type=button]:hover {
   display: none;
   color: rgb(209, 209, 209);
   font-size: 90%;
+  cursor: pointer;
 }
 
 .msg:hover .trash_icon {
@@ -210,5 +213,5 @@ form button[type=button]:hover {
 }
 
 .msg:hover {
-  background-color: #292929;
+  background-color: var(--bg_hover);
 }
