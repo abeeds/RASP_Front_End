@@ -159,8 +159,13 @@ form button[type=button]:hover {
 /*----Messages----*/
 .messages {
    background-color: #1f1f1f;
-   padding: 10px;
+   padding-top: 10px;
+   padding-bottom: 10px;
    border-radius: 15px;
+}
+
+.msg {
+  padding-left: 10px;
 }
 
 .msg_desc {
