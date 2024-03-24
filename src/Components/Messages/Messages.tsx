@@ -114,11 +114,11 @@ function Messages() {
 
       <div className='messages'>
       {msgs.map((msg) => (
-        <div>
+        <div className='msg'>
           { msg.user === user ? (
           <>
             <div className='msg_desc'>
-              <h5>{msg.user}</h5> 
+              <h5><strong>{msg.user}</strong></h5> 
               <div className='spacing'/>
               <h6>{formatTimestamp(msg.timestamp)}</h6>
               <div className='spacing'/>
@@ -130,7 +130,7 @@ function Messages() {
           (
           <>
             <div className='msg_desc'>
-              <h5>{msg.user}</h5> 
+              <h5><strong>{msg.user}</strong></h5> 
               <div className='spacing'></div>
               <h6>{formatTimestamp(msg.timestamp)}</h6>
             </div>

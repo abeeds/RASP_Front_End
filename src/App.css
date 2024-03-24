@@ -173,11 +173,12 @@ form button[type=button]:hover {
 }
 
 .messages p {
-  color: white
+  color: white;
 }
 
-.messages h1, h5{
-  color: white
+.messages h5{
+  color: white;
+  font-size: 110%;
 }
 
 .messages h5, h6 {
@@ -190,10 +191,19 @@ form button[type=button]:hover {
 }
 
 .trash_icon {
+  display: none;
   color: rgb(209, 209, 209);
   font-size: 90%;
 }
 
+.msg:hover .trash_icon {
+  display: inline-block;
+}
+
 .trash_icon:hover {
   color: #a0a0a0;
+}
+
+.msg:hover {
+  background-color: #292929;
 }
