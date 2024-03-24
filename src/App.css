@@ -193,3 +193,7 @@ form button[type=button]:hover {
   color: rgb(209, 209, 209);
   font-size: 90%;
 }
+
+.trash_icon:hover {
+  color: #a0a0a0;
+}
