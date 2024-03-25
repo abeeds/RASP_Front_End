@@ -173,7 +173,7 @@ button:hover {
   width: 80%;
   height: 100%;
   color: rgb(255, 255, 255);
-  padding-left: 15px;
+  padding-left: 20px;
   padding-bottom: 5px;
   background-color: var(--bg_hover);
   border-radius: 0px 0px 0px 15px;
