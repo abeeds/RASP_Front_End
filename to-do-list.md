@@ -4,7 +4,6 @@
     - might cause problems with the mongodb free tier limits
 - Improve CSS in messages page
     - Add an edit message option
-    - make the message/send bar look seamless with the rest of the messages
 - Use cookies to store logged-in state (also requires backend changes)
     - implement some kind of login token so login info isnt stored in plain text
     - add some limitation so you can't just clear cookies and re login, which would
