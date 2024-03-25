@@ -48,16 +48,6 @@ html {
   align-items: center;
 }
 
-button {
-  font-size: 1.5rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-
-  border-radius: 5px;
-  border: 2px solid var(--accent-color);
-  color: var(--accent-color);
-  background: var(--background-color);
-}
 button:focus,
 button:hover {
   background: var(--accent-color);
@@ -69,48 +59,6 @@ button:hover {
   padding: 1em;
   margin: 1em 0;
   border-radius: 5px;
-}
-
-form input {
-  display: block;
-  margin: .5rem 0 1rem 0;
-  padding: 1rem 0.5rem 0.5rem 0.5rem;
-  border-radius: 5px;
-  border: 2px solid var(--accent-color);
-  font-size: 1rem;
-}
-
-form label {
-  margin-left: 1rem;
-  display: block;
-  height: 0;
-  width: fit-content;
-  position: relative;
-  z-index: 1;
-}
-form label::before,
-form label::after {
-  content: '';
-  position: absolute;
-  height: 1.65rem;
-  top: -.25rem;
-  left: -5px;
-  width: calc(100% + 10px);
-  border: 2px solid var(--accent-color);
-  border-radius: 5px;
-  background-color: white;
-  z-index: -1;
-}
-
-form button {
-  margin-right: 1rem;
-}
-form button[type=button] {
-  border-color: var(--background-color);
-}
-form button[type=button]:focus,
-form button[type=button]:hover {
-  border-color: var(--accent-color);
 }
 
 .game-container {
@@ -161,13 +109,12 @@ form button[type=button]:hover {
 /*----Messages----*/
 .messages {
    background-color: var(--bg_color);
-   padding-top: 10px;
-   padding-bottom: 10px;
+   padding-top: 20px;
    border-radius: 15px;
 }
 
 .msg {
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 .msg_desc {
@@ -214,4 +161,40 @@ form button[type=button]:hover {
 
 .msg:hover {
   background-color: var(--bg_hover);
+}
+
+.SendMsgForm {
+  display: flex;
+  height: 45px;
+  align-items: center;
+}
+
+.msgToSend {
+  width: 80%;
+  height: 100%;
+  color: rgb(255, 255, 255);
+  padding-left: 15px;
+  padding-bottom: 5px;
+  background-color: var(--bg_hover);
+  border-radius: 0px 0px 0px 15px;
+  border: 0px;
+}
+
+.msgToSend:focus { 
+  outline: none;
+}
+
+.msgSubmit {
+  color: white;
+  width: 20%;
+  height: 100%;
+  background-color: var(--bg_color);
+  outline: none;
+  border: 0px;
+  border-radius: 0px 0px 15px 0px;
+}
+
+.msgSubmit:hover, .msgSubmit:focus {
+  background-color: #3e3e3e;
+  outline: none;
 }

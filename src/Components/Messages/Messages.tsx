@@ -37,12 +37,10 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
   }
 
   return (
-    <form onSubmit={sendMessage}>
-      <label htmlFor="content">
-        Message
-      </label>
-      <input type="text" id="content" value={content} onChange={changeContent}/>
-      <button type="submit">Send</button>
+    <form className='SendMsgForm' onSubmit={sendMessage}>
+      <input type="text" id="content" className='msgToSend' 
+      value={content} onChange={changeContent} placeholder={`Send a message to ${chatroom}`}/>
+      <button type="submit" className='msgSubmit'>Send</button>
     </form>
   );
 }
@@ -113,36 +111,36 @@ function Messages() {
         )}
 
       <div className='messages'>
-      {msgs.map((msg) => (
-        <div className='msg'>
-          { msg.user === user ? (
-          <>
-            <div className='msg_desc'>
-              <h5><strong>{msg.user}</strong></h5> 
-              <div className='spacing'/>
-              <h6>{formatTimestamp(msg.timestamp)}</h6>
-              <div className='spacing'/>
-              <h5 className='trash_icon'><i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
-            </div>
-            <p>{msg.content}</p>
-          </>
-          ) :
-          (
-          <>
-            <div className='msg_desc'>
-              <h5><strong>{msg.user}</strong></h5> 
-              <div className='spacing'></div>
-              <h6>{formatTimestamp(msg.timestamp)}</h6>
-            </div>
-            <p>{msg.content}</p>
-          </>
-          )
-        }
-        </div>
-      ))}
-    </div>
-    <hr></hr>
-    <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} />
+        {msgs.map((msg) => (
+          <div className='msg'>
+            { msg.user === user ? (
+              <>
+                <div className='msg_desc'>
+                  <h5><strong>{msg.user}</strong></h5> 
+                  <div className='spacing'/>
+                  <h6>{formatTimestamp(msg.timestamp)}</h6>
+                  <div className='spacing'/>
+                  <h5 className='trash_icon'><i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
+                </div>
+                <p>{msg.content}</p>
+              </>
+              ) :
+              (
+              <>
+                <div className='msg_desc'>
+                  <h5><strong>{msg.user}</strong></h5> 
+                  <div className='spacing'></div>
+                  <h6>{formatTimestamp(msg.timestamp)}</h6>
+                </div>
+                <p>{msg.content}</p>
+              </>
+              )
+            }
+          </div>
+        ))}
+        <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} />
+      </div>
+    
     </div>
   );
 }
