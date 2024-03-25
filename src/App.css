@@ -178,6 +178,8 @@ button:hover {
   background-color: var(--bg_hover);
   border-radius: 0px 0px 0px 15px;
   border: 0px;
+  white-space: pre-wrap; /* Preserve line breaks */
+  word-wrap: break-word; /* Enable word wrap */
 }
 
 .msgToSend:focus { 
