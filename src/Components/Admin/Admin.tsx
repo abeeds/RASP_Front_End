@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { BACKEND_URL } from '../../constants';
 import { getAdmin } from '../../variables';
@@ -24,10 +25,14 @@ interface WipeFormProps {
   setError: (error: string) => void;
 }
 
-interface Chatroom {
-  chatroom_name: string;
-  description: string;
-}
+// Has an error: defined but not used
+// leaving it here incase it is needed later
+// interface Chatroom {
+//   chatroom_name: string;
+//   description: string;
+// }
+
+
 
 function DelUserForm({ setError }: DelUserFormProps) {
   const [name, setName] = useState('');
@@ -147,6 +152,7 @@ function WipeForm({ setError }: WipeFormProps) {
 
 function Admin() {
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   if ( getAdmin() ) {
     return (
@@ -168,7 +174,9 @@ function Admin() {
       </div>
     );
   } else {
+    navigate('/chatrooms');
     return (
+      
       <div className="wrapper">
         <h1>
           Admin Actions

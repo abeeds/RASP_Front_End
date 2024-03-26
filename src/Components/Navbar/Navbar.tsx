@@ -1,15 +1,23 @@
 // import { Link } from 'react-router-dom'
 
+import { getAdmin } from "../../variables";
+
 interface Page {
   destination: string;
   label: string;
 }
 
-const PAGES: Page[] = [
+let PAGES: Page[] = [
   { label: 'Users', destination: '/users'},
-  { label: 'Admin', destination: '/admin'},
   { label: 'Chatrooms', destination: '/chatrooms'},
 ]
+
+if (getAdmin()) {
+  PAGES = [
+    ...PAGES,
+    { label: 'Admin', destination: '/admin'},
+  ];
+}
 
 const home_url: string = "/";
 
