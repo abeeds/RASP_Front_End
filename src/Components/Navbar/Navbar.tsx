@@ -17,7 +17,7 @@ const home_url: string = "/";
 function Navbar() {
 
   const mapper = (page: Page) => (
-    <a className="nav-item nav-link" href={page.destination}>{page.label}</a>
+    <a key={page.label} className="nav-item nav-link" href={page.destination}>{page.label}</a>
   );
 
   return (
