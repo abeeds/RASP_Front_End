@@ -7,17 +7,10 @@ interface Page {
   label: string;
 }
 
-let PAGES: Page[] = [
+const PAGES: Page[] = [
   { label: 'Users', destination: '/users'},
   { label: 'Chatrooms', destination: '/chatrooms'},
 ]
-
-if (getAdmin()) {
-  PAGES = [
-    ...PAGES,
-    { label: 'Admin', destination: '/admin'},
-  ];
-}
 
 const home_url: string = "/";
 
@@ -46,6 +39,10 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarToggle">
             <div className="navbar-nav mr-auto">
               {PAGES.map(mapper)}
+
+              {/* Adds Admin tab if admin */}
+              {getAdmin() 
+              && <a className="nav-item nav-link" href='/admin'>Admin</a>}
             </div>
             
             {/* Right side of navbar*/}
