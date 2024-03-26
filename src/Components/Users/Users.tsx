@@ -72,8 +72,7 @@ function Users() {
   };
 
   useEffect(
-    fetchUsers,
-    []
+    fetchUsers
   );
 
   return (
@@ -87,7 +86,9 @@ function Users() {
         </div>
       )}
     {users.map((user) => (
-      <div className="user-container">
+      <div 
+        key={user.username}
+        className="user-container">
         <p>{user.username}</p>
       </div>
     ))}
