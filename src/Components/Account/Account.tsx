@@ -1,15 +1,21 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState } from 'react';
 
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { BACKEND_URL } from '../../constants';
 
 
 function Account() {
+  const navigate = useNavigate();
   const [error, setError] = useState('');
 
   return (
-    <button onClick={localStorage.removeItem('user')}>Logout</button>
+    <div className="wrapper">
+      <button onClick={() => {
+        localStorage.removeItem('user');
+        navigate("/login");
+      }}>Logout</button>
+    </div>
   );
 }
 
