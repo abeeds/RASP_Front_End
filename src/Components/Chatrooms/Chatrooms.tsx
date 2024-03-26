@@ -97,6 +97,7 @@ function Chatrooms() {
         (chatroom) => (
 
           <Link 
+            key={chatroom.chatroom_name}
             to={`/messages/`} 
             onClick={() => {
               setRoom(chatroom.chatroom_name);
