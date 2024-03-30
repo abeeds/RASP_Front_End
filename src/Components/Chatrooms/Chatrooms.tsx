@@ -15,6 +15,7 @@ interface AddChatroomFormProps {
 interface Chatroom {
   chatroom_name: string;
   description: string;
+  owner: string;
 }
 
 function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
@@ -64,10 +65,11 @@ function Chatrooms() {
       .then((response) => {
         const chatroomsObject = response.data;
         const keys = Object.keys(chatroomsObject);
-        const chatroomsArray = keys.map((key) => ([key, chatroomsObject[key].description]));
-        const chatroomsFetch: Chatroom[] = chatroomsArray.map(([chatroom_name, description]) => ({
+        const chatroomsArray = keys.map((key) => ([key, chatroomsObject[key].description, chatroomsObject[key].owner]));
+        const chatroomsFetch: Chatroom[] = chatroomsArray.map(([chatroom_name, description, owner]) => ({
           chatroom_name,
           description,
+          owner,
         }));
 
         setChatrooms(chatroomsFetch);
@@ -106,10 +108,17 @@ function Chatrooms() {
             style={{ textDecoration: 'none' }}
           >
             <div className="chatroom-cont">
-              <h2>
-                {chatroom.chatroom_name}
-              </h2>
-              <p>{chatroom.description}</p>
+              {chatroom.owner == localStorage.getItem('user') ? (
+                <>
+                  <h2> {chatroom.chatroom_name} <i className="fa-solid fa-crown"></i></h2>
+                  <p>{chatroom.description}</p>
+                </>
+              ):(
+                <>
+                  <h2> {chatroom.chatroom_name} </h2>
+                  <p>{chatroom.description}</p>
+                </>
+              )}
             </div>
           </Link>
         ))
