@@ -27,7 +27,9 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
 
   const addChatroom = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios.post(`${BACKEND_URL}/insert_chatroom/` + name + '/' + description)
+    axios.post(`${BACKEND_URL}/insert_chatroom`, {
+      chatroom_name: name, description: description, owner: localStorage.getItem('user')
+    })
       .then(() => {
         setError('');
         fetchChatrooms();
