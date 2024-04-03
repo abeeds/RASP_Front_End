@@ -23,7 +23,7 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
 
   const user = localStorage.getItem('user');
   const chatroom: string = getRoom();
-  const changeContent = (event: ChangeEvent<HTMLInputElement>) => { setContent(event.target.value); };
+  const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
 
   const sendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,8 +38,13 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
 
   return (
     <form className='SendMsgForm' onSubmit={sendMessage}>
-      <input type="text" id="content" className='msgToSend' 
-      value={content} onChange={changeContent} placeholder={`Send a message to ${chatroom}`}/>
+      <textarea  
+        id="content" 
+        className='msgToSend' 
+        value={content} 
+        onChange={changeContent} 
+        placeholder={`Send a message to ${chatroom}`}
+      />
       <button type="submit" className='msgSubmit'>Send</button>
     </form>
   );
