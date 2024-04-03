@@ -44,7 +44,7 @@ function DelUserForm({ setError }: DelUserFormProps) {
   const delUser = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios
-      .delete(`${BACKEND_URL}/devdeactivate/` + name)
+      .delete(`${BACKEND_URL}/ban/` + name)
       .then((response) => {
         setError(response.data.message);
       })
