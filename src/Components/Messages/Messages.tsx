@@ -143,9 +143,9 @@ function Messages() {
             }
           </div>
         ))}
-        <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} />
+        
       </div>
-    
+      <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} />
     </div>
   );
 }

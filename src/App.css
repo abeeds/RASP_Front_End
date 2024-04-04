@@ -109,8 +109,10 @@ button:hover {
 /*----Messages----*/
 .messages {
    background-color: var(--bg_color);
-   padding-top: 20px;
+   padding-top: 15px;
+   padding-bottom: 10px;
    border-radius: 15px;
+   margin-bottom: 100px;
 }
 
 .msg {
@@ -166,8 +168,18 @@ button:hover {
 
 .SendMsgForm {
   display: flex;
-  height: 45px;
+  min-height: 45px;
+  max-height: 200px;
   align-items: center;
+  background-color: var(--bg_hover);
+  
+  border: 1px red dotted;
+  
+  position: fixed; 
+  bottom:0%;
+  width: min(800px, 100% - 4rem);
+  padding: 15px;
+  border-radius: 15px;
 }
 
 .msgToSend {
@@ -177,10 +189,11 @@ button:hover {
   padding-left: 20px;
   padding-bottom: 5px;
   background-color: var(--bg_hover);
-  border-radius: 0px 0px 0px 15px;
   border: 0px;
   resize: none;
   overflow-y: hidden;
+
+  border: 1px cyan dotted;
 }
 
 .msgToSend:focus { 
@@ -189,12 +202,14 @@ button:hover {
 
 .msgSubmit {
   color: white;
-  width: 20%;
+  width: 10%;
   height: 100%;
   background-color: #141414;
   outline: none;
   border: 0px;
-  border-radius: 0px 0px 15px 0px;
+  
+
+  border: 1px green dotted;
 }
 
 .msgSubmit:hover, .msgSubmit:focus {
