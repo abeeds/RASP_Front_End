@@ -32,6 +32,7 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
         setError('');
         setContent('');
         fetchMessages(chatroom);
+        window.scrollTo(0, document.body.scrollHeight);
       })
       .catch((error) => { setError(error.response.data.message); });
   }
@@ -95,6 +96,12 @@ function Messages() {
   useEffect(
     fetchMessages,
   );
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    }, 100);
+  }, []);
 
   const deleteMessage = (msgKey: string) => {
     axios.delete(`${BACKEND_URL}/delete_msg/` + msgKey)
