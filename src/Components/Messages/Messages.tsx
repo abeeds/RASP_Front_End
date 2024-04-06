@@ -131,7 +131,7 @@ function Messages() {
 
       <div className='messages'>
         {msgs.map((msg) => (
-          <div className='msg'>
+          <div className='msg' key={msg.key}>
             { msg.user === user ? (
               <>
                 <div className='msg_desc'>
