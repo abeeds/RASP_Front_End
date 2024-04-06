@@ -11,6 +11,7 @@ import './Messages.css';
 interface SendMessageFormProps {
   setError: (error: string) => void;
   fetchMessages: (chatroom: string) => void;
+  room_name: string;
 }
 
 interface Message {
@@ -20,23 +21,21 @@ interface Message {
   content: string;
 }
 
-function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
+// This is the message bar at the bottom of the page
+function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageFormProps) {
   const [content, setContent] = useState('');
 
   const user = localStorage.getItem('user');
-
-  const roomParams = useParams();
-  const chatroom: string = roomParams?.["chatroom"]?.toString() || '';
 
   const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
 
   const sendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios.post(`${BACKEND_URL}/write_msg`, { chatroom_name: chatroom, username: user, content: content } )
+    axios.post(`${BACKEND_URL}/write_msg`, { chatroom_name: room_name, username: user, content: content } )
       .then(() => {
         setError('');
         setContent('');
-        fetchMessages(chatroom);
+        fetchMessages(room_name);
         window.scrollTo(0, document.body.scrollHeight);
       })
       .catch((error) => { setError(error.response.data.message); });
@@ -49,7 +48,7 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
         className='msgToSend' 
         value={content} 
         onChange={changeContent} 
-        placeholder={`Send a message to ${chatroom}`}
+        placeholder={`Send a message to ${room_name}`}
       />
       <button type="submit" className='msgSubmit'>Send</button>
     </form>
@@ -68,6 +67,7 @@ function formatTimestamp(timestamp: number): string {
   return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
+// This is the actual page
 function Messages() {
   const navigate = useNavigate();
 
@@ -159,7 +159,7 @@ function Messages() {
         ))}
         
       </div>
-      <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} />
+      <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} room_name={chatroom} />
     </div>
   );
 }
