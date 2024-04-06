@@ -17,7 +17,10 @@ import Admin from './Components/Admin';
 import Account from './Components/Account';
 
 function App() {
-  const [time, setTime] = useState<Date>(new Date());
+  
+  // previously had time as first param, but it was creating
+  // an error with TypeScript so I removed it.
+  const [, setTime] = useState<Date>(new Date());
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -33,6 +36,7 @@ function App() {
         <Route path="login" element={<Login/>} />
         <Route path="users" element={<Users/>} />
         <Route path="chatrooms" element={<Chatrooms/>} />
+        <Route path="chatrooms/:chatroom" element={<Messages/>} />
         <Route path="messages" element={<Messages/>} />
         <Route path="admin" element={<Admin/>} />
         <Route path="account" element={<Account/>} />

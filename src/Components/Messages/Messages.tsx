@@ -1,9 +1,9 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 import { BACKEND_URL } from '../../constants';
-import { getRoom, setRoom } from '../../variables';
 
 import './Messages.css';
 
@@ -24,7 +24,10 @@ function SendMessageForm({ setError, fetchMessages }: SendMessageFormProps) {
   const [content, setContent] = useState('');
 
   const user = localStorage.getItem('user');
-  const chatroom: string = getRoom();
+
+  const roomParams = useParams();
+  const chatroom: string = roomParams?.["chatroom"]?.toString() || '';
+
   const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
 
   const sendMessage = (event: FormEvent<HTMLFormElement>) => {
@@ -68,7 +71,9 @@ function formatTimestamp(timestamp: number): string {
 function Messages() {
   const navigate = useNavigate();
 
-  const chatroom: string = getRoom();
+  const roomParams = useParams();
+  const chatroom: string = roomParams?.["chatroom"]?.toString() || '';
+
   const user = localStorage.getItem('user');
   const [error, setError] = useState('');
   const [msgs, setMsgs] = useState<Message[]>([]);
@@ -116,7 +121,7 @@ function Messages() {
   return (
     <div className="wrapper">
       <h1>
-        {chatroom}  <button onClick={() => { setRoom(chatroom); navigate('/chatrooms'); }}>Return</button>
+        {chatroom}  <button onClick={() => {navigate('/chatrooms'); }}>Return</button>
       </h1>
         {error && (
           <div className="error-message">
