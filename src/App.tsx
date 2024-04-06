@@ -37,7 +37,6 @@ function App() {
         <Route path="users" element={<Users/>} />
         <Route path="chatrooms" element={<Chatrooms/>} />
         <Route path="chatrooms/:chatroom" element={<Messages/>} />
-        <Route path="messages" element={<Messages/>} />
         <Route path="admin" element={<Admin/>} />
         <Route path="account" element={<Account/>} />
       </Routes>
