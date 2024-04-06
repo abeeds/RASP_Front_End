@@ -5,6 +5,8 @@ import axios from 'axios';
 import { BACKEND_URL } from '../../constants';
 import { getRoom, setRoom } from '../../variables';
 
+import './messages.css';
+
 // Type Declarations
 interface SendMessageFormProps {
   setError: (error: string) => void;

@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { BACKEND_URL } from '../../constants';
 import { setRoom } from '../../variables';
 
+import './Chatrooms.css';
+
 // Type Declarations
 interface AddChatroomFormProps {
   setError: (error: string) => void;

@@ -1,0 +1,28 @@
+.chatroom-display {
+    background-color: var(--bg_color);
+    border-radius: 15px;
+    margin: 20px
+  }
+  
+  .chatroom-cont {
+    border-radius: 15px;
+    padding: 10px;
+  }
+  
+  .chatroom-cont h2 {
+    color: white;
+  }
+  
+  .chatroom-cont p {
+    color: rgb(255, 255, 255);
+    font-size: small;
+  }
+  
+  .chatroom-cont:hover {
+    background-color: var(--bg_hover);
+    text-decoration: none;
+  }
+  
+  .chatroom-label {
+    text-align: center;
+  }
