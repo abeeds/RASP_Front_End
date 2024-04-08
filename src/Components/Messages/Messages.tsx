@@ -104,6 +104,26 @@ function Messages() {
     fetchMessages,
   );
 
+  // currently a WIP
+  // when user scrolls to the top, load more messages
+  const [prevScroll, setprevScroll] = useState(0);
+  useEffect(() => {
+    const scrollUpAtTop = () => {
+      const currScroll = window.scrollY;
+      const atTop = currScroll === 0;
+      if (prevScroll > currScroll && atTop) {
+        // will change to run code that loads more messages
+        console.log("Scrolled to top")
+      }
+      setprevScroll(currScroll);
+    }
+
+    window.addEventListener('scroll', scrollUpAtTop)
+    return () => {
+      window.removeEventListener('scroll', scrollUpAtTop);
+    }
+  }, [prevScroll]);
+
   useEffect(() => {
     setTimeout(() => {
       window.scrollTo(0, document.body.scrollHeight);
