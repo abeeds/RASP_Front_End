@@ -1,6 +1,8 @@
-# React + TypeScript + Vite
+# RASP Front End
+This is the front end repo for [RASP](https://github.com/abeeds/RASP) <br>
 [To-do list](https://github.com/abeeds/RASP_Front_End/blob/main/to-do-list.md)
 
+# Default React README
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
