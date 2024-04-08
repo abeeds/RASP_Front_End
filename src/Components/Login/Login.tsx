@@ -6,6 +6,8 @@ import axios from 'axios';
 import { BACKEND_URL, ADMIN_KEY } from '../../constants';
 import { setAdmin } from '../../variables';
 
+const maxUserLen: number = 16;
+const maxPassLen: number = 32;
 
 interface LoginFormProps {
   setError: (error: string) => void;
@@ -86,17 +88,40 @@ function LoginForm({setError}: LoginFormProps) {
   return (
     <>
       
+      {/* First case is for Register form, 2nd is for login */}
       {loginOrReg ? (
           <>
           <h1>Register</h1>
           <form onSubmit={register}>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" value={name} onChange={changeName} />
+            <label htmlFor="name">Username</label>
+            <input 
+              type="text"
+              id="name"
+              value={name}
+              onChange={changeName}
+              maxLength={maxUserLen}
+            />
+
             <label htmlFor="pass">Password (insecure)</label>
-            <input type="password" id="pass" value={passReg} onChange={changePassReg} />
+            <input 
+              type="password" 
+              id="pass" 
+              value={passReg} 
+              onChange={changePassReg} 
+              maxLength={maxPassLen}
+            />
+            
             <label htmlFor="pass">Confirm Password (insecure)</label>
-            <input type="password" id="passConfirm" value={passConfirm} onChange={changePassConfirm} />
+            <input 
+              type="password" 
+              id="passConfirm" 
+              value={passConfirm} 
+              onChange={changePassConfirm} 
+              maxLength={maxPassLen}
+            />
+
             <button type="button" onClick={setToLogIn}>Login</button><button type="submit">Submit</button> 
+          
           </form>
           </>
         ) : 
@@ -104,10 +129,23 @@ function LoginForm({setError}: LoginFormProps) {
           <>
           <h1>Login</h1>
           <form onSubmit={logIn}>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" value={name} onChange={changeName} />
+            <label htmlFor="name">Username</label>
+            <input 
+              type="text"
+              id="name"
+              value={name}
+              onChange={changeName}
+              maxLength={maxUserLen}
+            />
+            
             <label htmlFor="pass">Password (insecure)</label>
-            <input type="password" id="pass" value={pass} onChange={changePass} />
+            <input 
+              type="password" 
+              id="pass" 
+              value={pass} 
+              onChange={changePass} 
+              maxLength={8}
+            />
             <button type="button" onClick={setToReg}>Register</button><button type="submit">Submit</button> 
           </form>
           </>
