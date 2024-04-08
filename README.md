@@ -2,6 +2,11 @@
 This is the front end repo for [RASP](https://github.com/abeeds/RASP) <br>
 [To-do list](https://github.com/abeeds/RASP_Front_End/blob/main/to-do-list.md)
 
+## Build and Run
+- install packages with `npm install`
+- if running local backend server run `./local.sh` to run the frontend
+- if running cloud backend server run `./cloud.sh` to run the frontend
+
 # Default React README
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -31,9 +36,3 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-
-## Build and Run
-- install packages with `npm install`
-- if running local backend server run `./local.sh` to run the frontend
-- if running cloud backend server run `./cloud.sh` to run the frontend
-
