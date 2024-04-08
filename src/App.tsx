@@ -15,6 +15,7 @@ import Chatrooms from './Components/Chatrooms';
 import Messages from './Components/Messages';
 import Admin from './Components/Admin';
 import Account from './Components/Account';
+import Hform from './Components/Hform';
 
 function App() {
   
@@ -39,6 +40,7 @@ function App() {
         <Route path="chatrooms/:chatroom" element={<Messages/>} />
         <Route path="admin" element={<Admin/>} />
         <Route path="account" element={<Account/>} />
+        <Route path="hform" element={<Hform/>} />
       </Routes>
     </BrowserRouter>
   );
