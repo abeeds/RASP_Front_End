@@ -2,6 +2,8 @@
 
 import { getAdmin } from "../../variables";
 
+// Navbar CSS is in App.css
+
 interface Page {
   destination: string;
   label: string;

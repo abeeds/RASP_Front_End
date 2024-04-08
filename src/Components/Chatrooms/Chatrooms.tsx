@@ -1,10 +1,12 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { BACKEND_URL } from '../../constants';
-import { setRoom } from '../../variables';
+// import { setRoom } from '../../variables';
+
+import './Chatrooms.css';
 
 // Type Declarations
 interface AddChatroomFormProps {
@@ -53,7 +55,7 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
 }
 
 function Chatrooms() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [error, setError] = useState('');
   const [chatrooms, setChatrooms] = useState<Chatroom[]>([]);
@@ -102,11 +104,7 @@ function Chatrooms() {
 
           <Link 
             key={chatroom.chatroom_name}
-            to={`/messages/`} 
-            onClick={() => {
-              setRoom(chatroom.chatroom_name);
-              navigate('/messages');
-            }}
+            to={`/chatrooms/${encodeURIComponent(chatroom.chatroom_name)}`}
             style={{ textDecoration: 'none' }}
           >
             <div className="chatroom-cont">
