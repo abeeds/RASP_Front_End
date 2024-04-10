@@ -64,16 +64,23 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
       .then(response => {
         console.log('Submission successful:', response.data);
         // If needed, handle success response
+        setError(response.data.Status);
       })
       .catch(error => {
         console.error('Error submitting answers:', error);
         // If needed, handle error response
+        setError('Error encountered');
       });
     
   };
 
   return (
     <div className="wrapper">
+      {error && (
+        <div className="error-message">
+        {error}
+        </div>
+      )}
       <form onSubmit={handleFormSubmit}>
         {fields.map(({ fieldName, type, label }) => (
           <div key={fieldName}>
