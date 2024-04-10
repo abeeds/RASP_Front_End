@@ -7,6 +7,7 @@ import { BACKEND_URL } from '../../constants';
 interface Field {
   fieldName: string;
   type?: string;
+  label?: string;
 }
 
 interface FormProps {
@@ -71,14 +72,17 @@ function Form({ handleSubmit }: FormProps): JSX.Element {
   return (
     <div className="wrapper">
       <form onSubmit={handleFormSubmit}>
-        {fields.map(({ fieldName, type }) => (
-          <input
-            key={fieldName}
-            type={type || 'text'}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              answerQuestion(fieldName, e.target.value);
-            }}
-          />
+        {fields.map(({ fieldName, type, label }) => (
+          <div key={fieldName}>
+            <label htmlFor={fieldName}>{label}: </label>
+            <input
+              key={fieldName}
+              type={type || 'text'}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                answerQuestion(fieldName, e.target.value);
+              }}
+            />
+          </div>
         ))}
         <button type="submit">Submit</button>
       </form>
