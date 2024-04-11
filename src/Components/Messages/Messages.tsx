@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-import { BACKEND_URL } from '../../constants';
+
 
 import './Messages.css';
+import { DELETE_MSG, GET_MSGS, WRITE_MSG } from '../../constants';
 
 // Type Declarations
 interface SendMessageFormProps {
@@ -31,7 +32,7 @@ function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageForm
 
   const sendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios.post(`${BACKEND_URL}/write_msg`, { chatroom_name: room_name, username: user, content: content } )
+    axios.post(`${WRITE_MSG}`, { chatroom_name: room_name, username: user, content: content } )
       .then(() => {
         setError('');
         setContent('');
@@ -79,7 +80,7 @@ function Messages() {
   const [msgs, setMsgs] = useState<Message[]>([]);
 
   const fetchMessages = () => {
-    axios.get(`${BACKEND_URL}/get_msgs/` + chatroom)
+    axios.get(`${GET_MSGS}` + chatroom)
       .then((response) => {
         const msgsObject = response.data;
         const keys = Object.keys(msgsObject);
@@ -131,7 +132,7 @@ function Messages() {
   }, []);
 
   const deleteMessage = (msgKey: string) => {
-    axios.delete(`${BACKEND_URL}/delete_msg/` + msgKey)
+    axios.delete(`${DELETE_MSG}` + msgKey)
       .then(() => {
         setError('');
       })

@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
-import { BACKEND_URL, ADMIN_KEY } from '../../constants';
+import { ADMIN_KEY } from '../../constants';
 import { setAdmin } from '../../variables';
+import { LOGIN, REGISTER } from '../../constants';
 
 const maxUserLen: number = 16;
 const maxPassLen: number = 32;
@@ -52,7 +53,7 @@ function LoginForm({setError}: LoginFormProps) {
       navigate('/admin');
     }
     axios
-      .get(`${BACKEND_URL}/login/` + name + '/' + pass)
+      .get(`${LOGIN}` + name + '/' + pass)
       .then((response) => {
         if ( response.data.message == 'true' ) {
           localStorage.setItem('user', name);
@@ -72,7 +73,7 @@ function LoginForm({setError}: LoginFormProps) {
       console.log(event);
     if(passReg == passConfirm) {
       axios
-        .post(`${BACKEND_URL}/register/` + name + '/' + passReg)
+        .post(`${REGISTER}` + name + '/' + passReg)
         .then((response) => {
           setError(response.data.message);
         })
