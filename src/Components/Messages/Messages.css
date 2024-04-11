@@ -59,8 +59,6 @@
  
  .SendMsgForm {
    display: flex;
-   min-height: 45px;
-   max-height: 200px;
    align-items: center;
    background-color: var(--bg_hover);
    
@@ -75,14 +73,15 @@
  
  .msgToSend {
    width: 80%;
-   height: 100%;
+   field-sizing: content; /*This css prop is new, which is probably why theres a warning*/
+   max-height: 200px;
    color: rgb(255, 255, 255);
    padding-left: 20px;
    padding-bottom: 5px;
    background-color: var(--bg_hover);
    border: 0px;
    resize: none;
-   overflow-y: hidden;
+   overflow-y: auto;
  
    /*border: 1px cyan dotted;*/
  }
