@@ -144,7 +144,7 @@ function LoginForm({setError}: LoginFormProps) {
               id="pass" 
               value={pass} 
               onChange={changePass} 
-              maxLength={8}
+              maxLength={maxPassLen}
             />
             <button type="button" onClick={setToReg}>Register</button><button type="submit">Submit</button> 
           </form>
