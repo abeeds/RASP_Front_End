@@ -30,8 +30,15 @@ function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageForm
 
   const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
 
+
   const sendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // do nothing if message is empty or just whitespace
+    if (!content.trim()) {
+      return;
+    }
+
     axios.post(`${WRITE_MSG}`, { chatroom_name: room_name, username: user, content: content } )
       .then(() => {
         setError('');
@@ -43,7 +50,10 @@ function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageForm
   }
 
   return (
-    <form className='SendMsgForm' onSubmit={sendMessage}>
+    <form 
+      className='SendMsgForm' 
+      onSubmit={sendMessage}
+    >
       <textarea  
         id="content" 
         className='msgToSend' 

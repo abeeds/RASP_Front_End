@@ -73,8 +73,9 @@
  
  .msgToSend {
    width: 80%;
+   min-height: 31px;
    field-sizing: content; /*This css prop is new, which is probably why theres a warning*/
-   max-height: 200px;
+   max-height: 207px;
    color: rgb(255, 255, 255);
    padding-left: 20px;
    padding-bottom: 5px;
@@ -88,6 +89,7 @@
  
  .msgToSend:focus { 
    outline: none;
+   background-color: var(--bg_hover);
  }
  
  .msgSubmit {
@@ -97,7 +99,6 @@
    background-color: #141414;
    outline: none;
    border: 0px;
-   
  
    /*border: 1px green dotted;*/
  }
@@ -106,7 +107,7 @@
    cursor: pointer;
  }
  
- .msgSubmit:hover, .msgSubmit:focus {
-   background-color: #3e3e3e;
+ .msgSubmit:hover, :focus {
    outline: none;
+   background-color: #141414;
  }
