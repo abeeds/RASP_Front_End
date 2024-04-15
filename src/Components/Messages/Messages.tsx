@@ -50,19 +50,21 @@ function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageForm
   }
 
   return (
-    <form 
-      className='SendMsgForm' 
-      onSubmit={sendMessage}
-    >
-      <textarea  
-        id="content" 
-        className='msgToSend' 
-        value={content} 
-        onChange={changeContent} 
-        placeholder={`Send a message to ${room_name}`}
-      />
-      <button type="submit" className='msgSubmit'>Send</button>
-    </form>
+    <div className='msgFormWrap'>
+      <form 
+        className='SendMsgForm' 
+        onSubmit={sendMessage}
+      >
+        <textarea  
+          id="content" 
+          className='msgToSend' 
+          value={content} 
+          onChange={changeContent} 
+          placeholder={`Send a message to ${room_name}`}
+        />
+        <button type="submit" className='msgSubmit'>Send</button>
+      </form>
+    </div>
   );
 }
 
@@ -174,7 +176,9 @@ function Messages() {
   });
 
   const messagesSpacing = {
-    marginBottom: `calc(2% + ${msgBarHeight}px + 45px)`,
+    // the numbers being added accounts for spacing
+    // 1% is the 
+    paddingBottom: `calc(1% + ${msgBarHeight}px + 30px)`,
   }
 
   return (
@@ -189,41 +193,45 @@ function Messages() {
         )}
 
       <div 
-        className='messages'
+        className='messagesBG'
         style={messagesSpacing}
       >
-        {msgs.map((msg) => (
-          <div className='msg' key={msg.key}>
-            { msg.user === user ? (
-              <>
-                <div className='msg_desc'>
-                  <h5><strong>{msg.user}</strong></h5> 
-                  <div className='spacing'/>
-                  <h6>{formatTimestamp(msg.timestamp)}</h6>
-                  <div className='spacing'/>
-                  <h5 className='options'><i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
-                  <div className='spacing'/>
-                  <h5 className='options'><i className="fa-solid fa-pencil"></i></h5>
-                </div>
-                <p>{msg.content}</p>
-              </>
-              ) :
-              (
-              <>
-                <div className='msg_desc'>
-                  <h5><strong>{msg.user}</strong></h5> 
-                  <div className='spacing'></div>
-                  <h6>{formatTimestamp(msg.timestamp)}</h6>
-                </div>
-                <p>{msg.content}</p>
-              </>
-              )
-            }
-          </div>
-        ))}
-        
+        <div 
+          className='messages'
+        >
+          {msgs.map((msg) => (
+            <div className='msg' key={msg.key}>
+              { msg.user === user ? (
+                <>
+                  <div className='msg_desc'>
+                    <h5><strong>{msg.user}</strong></h5> 
+                    <div className='spacing'/>
+                    <h6>{formatTimestamp(msg.timestamp)}</h6>
+                    <div className='spacing'/>
+                    <h5 className='options'><i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
+                    <div className='spacing'/>
+                    <h5 className='options'><i className="fa-solid fa-pencil"></i></h5>
+                  </div>
+                  <p>{msg.content}</p>
+                </>
+                ) :
+                (
+                <>
+                  <div className='msg_desc'>
+                    <h5><strong>{msg.user}</strong></h5> 
+                    <div className='spacing'></div>
+                    <h6>{formatTimestamp(msg.timestamp)}</h6>
+                  </div>
+                  <p>{msg.content}</p>
+                </>
+                )
+              }
+            </div>
+          ))}
+          
+        </div>
+        <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} room_name={chatroom} />
       </div>
-      <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} room_name={chatroom} />
     </div>
   );
 }
