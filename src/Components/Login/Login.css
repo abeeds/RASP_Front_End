@@ -1,0 +1,24 @@
+.logInForm, .regForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logInForm *, .regForm * {
+    margin-bottom: 15px;
+}
+
+
+.logInRegInput {
+    background-color: var(--bg_color);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: calc(0.33 * min(800px, 100% - 4rem));
+    outline: none;
+}
+
+.logInRegInput:focus {
+    background-color: --bg_color;
+    outline: none;
+}

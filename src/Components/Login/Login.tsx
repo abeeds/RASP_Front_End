@@ -7,6 +7,8 @@ import { ADMIN_KEY } from '../../constants';
 import { setAdmin } from '../../variables';
 import { LOGIN, REGISTER } from '../../constants';
 
+import './Login.css';
+
 const maxUserLen: number = 16;
 const maxPassLen: number = 32;
 
@@ -26,16 +28,20 @@ function LoginForm({setError}: LoginFormProps) {
 
   // handles fields of the forms
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+    const nameWithoutSpace = event.target.value.replace(/\s/g, '');
+    setName(nameWithoutSpace);
   };
   const changePass = (event: ChangeEvent<HTMLInputElement>) => {
-    setPass(event.target.value);
+    const passWithoutSpaces = event.target.value.replace(/\s/g, '');
+    setPass(passWithoutSpaces);
   };
   const changePassReg = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassReg(event.target.value);
+    const passWithoutSpaces = event.target.value.replace(/\s/g, '');
+    setPassReg(passWithoutSpaces);
   };
   const changePassConfirm = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassConfirm(event.target.value);
+    const passWithoutSpaces = event.target.value.replace(/\s/g, '');
+    setPassConfirm(passWithoutSpaces);
   }; // specifically used in the register form
 
   // handles whether login or register form is shown in return statement
@@ -93,11 +99,16 @@ function LoginForm({setError}: LoginFormProps) {
       {loginOrReg ? (
           <>
           <h1>Register</h1>
-          <form onSubmit={register}>
+          <button type="button" onClick={setToLogIn}>Login Instead</button>
+          <form 
+            className='regForm'
+            onSubmit={register}
+          >
             <label htmlFor="name">Username</label>
             <input 
               type="text"
               id="name"
+              className='logInRegInput'
               value={name}
               onChange={changeName}
               maxLength={maxUserLen}
@@ -107,6 +118,7 @@ function LoginForm({setError}: LoginFormProps) {
             <input 
               type="password" 
               id="pass" 
+              className='logInRegInput'
               value={passReg} 
               onChange={changePassReg} 
               maxLength={maxPassLen}
@@ -116,12 +128,13 @@ function LoginForm({setError}: LoginFormProps) {
             <input 
               type="password" 
               id="passConfirm" 
+              className='logInRegInput'
               value={passConfirm} 
               onChange={changePassConfirm} 
               maxLength={maxPassLen}
             />
 
-            <button type="button" onClick={setToLogIn}>Login</button><button type="submit">Submit</button> 
+            <button type="submit">Submit</button> 
           
           </form>
           </>
@@ -129,11 +142,16 @@ function LoginForm({setError}: LoginFormProps) {
         (
           <>
           <h1>Login</h1>
-          <form onSubmit={logIn}>
+          <button type="button" onClick={setToReg}>Register Instead</button>
+          <form 
+            className='logInForm'
+            onSubmit={logIn}
+          >
             <label htmlFor="name">Username</label>
             <input 
               type="text"
               id="name"
+              className='logInRegInput'
               value={name}
               onChange={changeName}
               maxLength={maxUserLen}
@@ -143,11 +161,12 @@ function LoginForm({setError}: LoginFormProps) {
             <input 
               type="password" 
               id="pass" 
+              className='logInRegInput'
               value={pass} 
               onChange={changePass} 
               maxLength={maxPassLen}
             />
-            <button type="button" onClick={setToReg}>Register</button><button type="submit">Submit</button> 
+            <button type="submit">Submit</button> 
           </form>
           </>
         )
