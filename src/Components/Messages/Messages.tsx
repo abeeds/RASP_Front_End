@@ -212,7 +212,9 @@ function Messages() {
                     <div className='spacing'/>
                     <h5 className='options'><i className="fa-solid fa-pencil"></i></h5>
                   </div>
-                  <p>{msg.content}</p>
+                  {msg.content.split('\n').map((line, index) => (
+                    <p key={index}>{line}<br></br></p>
+                  ))}
                 </>
                 ) :
                 (
