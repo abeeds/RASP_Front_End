@@ -39,7 +39,7 @@ function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageForm
       return;
     }
 
-    axios.post(`${WRITE_MSG}`, { chatroom_name: room_name, username: user, content: content } )
+    axios.post(`${WRITE_MSG}`, { chatroom_name: room_name, username: user, content: content.trim() } )
       .then(() => {
         setError('');
         setContent('');
