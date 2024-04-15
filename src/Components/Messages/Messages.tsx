@@ -166,6 +166,11 @@ function Messages() {
         target.style.height = `${target.scrollHeight}px`;
       };
       
+      if(messageBar.value === '') {
+        messageBar.style.height = '31px';
+        setMsgBarHeight(31);
+      }
+      
       messageBar.addEventListener('input', adjustMsgBarHeight);
 
       // clean up to avoid mem leak
