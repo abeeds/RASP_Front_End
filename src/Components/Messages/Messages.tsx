@@ -203,7 +203,7 @@ function Messages() {
             <div className='msg' key={msg.key}>
               { msg.user === user ? (
                 <>
-                  <div className='msg_desc'>
+                  <div className='msgDesc'>
                     <h5><strong>{msg.user}</strong></h5> 
                     <div className='spacing'/>
                     <h6>{formatTimestamp(msg.timestamp)}</h6>
@@ -217,7 +217,7 @@ function Messages() {
                 ) :
                 (
                 <>
-                  <div className='msg_desc'>
+                  <div className='msgDesc'>
                     <h5><strong>{msg.user}</strong></h5> 
                     <div className='spacing'></div>
                     <h6>{formatTimestamp(msg.timestamp)}</h6>
