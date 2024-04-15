@@ -3,7 +3,7 @@
     padding-top: 15px;
     padding-bottom: 10px;
     border-radius: 15px;
-    margin-bottom: 100px;
+    /*margin-bottom: calc(2% + 31px + 30px + 15px);*/
  }
  
  .msg {
@@ -38,18 +38,18 @@
    font-size: 75%;
  }
  
- .trash_icon {
+ .options {
    display: none;
    color: rgb(209, 209, 209);
    font-size: 90%;
    cursor: pointer;
  }
  
- .msg:hover .trash_icon {
+ .msg:hover .options {
    display: inline-block;
  }
  
- .trash_icon:hover {
+ .options:hover {
    color: #a0a0a0;
  }
  
@@ -65,7 +65,7 @@
    /*border: 1px red dotted;*/
    
    position: fixed; 
-   bottom:0%;
+   bottom: 2%;
    width: min(800px, 100% - 4rem);
    padding: 15px;
    border-radius: 15px;
@@ -74,7 +74,7 @@
  .msgToSend {
    width: 80%;
    min-height: 31px;
-   field-sizing: content; /*This css prop is new, which is probably why theres a warning*/
+   height:31px;
    max-height: 207px;
    color: rgb(255, 255, 255);
    padding-left: 20px;

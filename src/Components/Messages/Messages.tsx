@@ -149,6 +149,34 @@ function Messages() {
       .catch((error) => { setError(error.response.data.message); });
   }
 
+  // this part handles message bar sizing and the spacing at the bottom to
+  // keep the lowest messages readable
+  const [msgBarHeight, setMsgBarHeight] = useState(31);
+  // const [isAtBottom, setIsAtBottom] = useState(false);
+  useEffect(() => {
+    const messageBar = document.querySelector('.msgToSend') as HTMLTextAreaElement | null;
+    
+    if(messageBar) {
+      setMsgBarHeight(messageBar.clientHeight);
+      const adjustMsgBarHeight = (e: Event) => {
+        const target = e.target as HTMLTextAreaElement;
+        target.style.height = '31px';
+        target.style.height = `${target.scrollHeight}px`;
+      };
+      
+      messageBar.addEventListener('input', adjustMsgBarHeight);
+
+      // clean up to avoid mem leak
+      return () => {
+        messageBar.removeEventListener('input', adjustMsgBarHeight);
+      }
+    }
+  });
+
+  const messagesSpacing = {
+    marginBottom: `calc(2% + ${msgBarHeight}px + 45px)`,
+  }
+
   return (
     <div className="wrapper">
       <h1>
@@ -160,7 +188,10 @@ function Messages() {
           </div>
         )}
 
-      <div className='messages'>
+      <div 
+        className='messages'
+        style={messagesSpacing}
+      >
         {msgs.map((msg) => (
           <div className='msg' key={msg.key}>
             { msg.user === user ? (
@@ -170,7 +201,9 @@ function Messages() {
                   <div className='spacing'/>
                   <h6>{formatTimestamp(msg.timestamp)}</h6>
                   <div className='spacing'/>
-                  <h5 className='trash_icon'><i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
+                  <h5 className='options'><i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
+                  <div className='spacing'/>
+                  <h5 className='options'><i className="fa-solid fa-pencil"></i></h5>
                 </div>
                 <p>{msg.content}</p>
               </>
