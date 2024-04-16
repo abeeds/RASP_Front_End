@@ -219,7 +219,10 @@ function Messages() {
                     <h5 className='options'><i className="fa-solid fa-pencil"></i></h5>
                   </div>
                   {msg.content.split('\n').map((line, index) => (
-                    <p key={index}>{line}<br></br></p>
+                    <p key={index}>
+                        {line}
+                        {index !== msg.content.split('\n').length - 1 && <br />}
+                    </p>
                   ))}
                 </>
                 ) :
@@ -231,7 +234,10 @@ function Messages() {
                     <h6>{formatTimestamp(msg.timestamp)}</h6>
                   </div>
                   {msg.content.split('\n').map((line, index) => (
-                    <p key={index}>{line}<br></br></p>
+                    <p key={index}>
+                        {line}
+                        {index !== msg.content.split('\n').length - 1 && <br />}
+                    </p>
                   ))}
                 </>
                 )
