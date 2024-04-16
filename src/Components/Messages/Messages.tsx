@@ -110,9 +110,22 @@ function Messages() {
       .catch(() => { setError('oopsie woopsie'); });
   };
 
-  useEffect(
-    fetchMessages,
-  );
+  const deleteMessage = (msgKey: string) => {
+    axios.delete(`${DELETE_MSG}` + msgKey)
+      .then(() => {
+        setError('');
+      })
+      .catch((error) => { setError(error.response.data.message); });
+  }
+
+  useEffect(fetchMessages,)
+
+  // jump to bottom of page after first render
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    }, 100);
+  }, []);
 
   // currently a WIP
   // when user scrolls to the top, load more messages
@@ -133,29 +146,14 @@ function Messages() {
       window.removeEventListener('scroll', scrollUpAtTop);
     }
   }, [prevScroll]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      window.scrollTo(0, document.body.scrollHeight);
-    }, 100);
-  }, []);
-
-  const deleteMessage = (msgKey: string) => {
-    axios.delete(`${DELETE_MSG}` + msgKey)
-      .then(() => {
-        setError('');
-      })
-      .catch((error) => { setError(error.response.data.message); });
-  }
-
-  // this part handles message bar sizing and the spacing at the bottom to
-  // keep the lowest messages readable
+  
   const msgBarMin: number = 31;
   const [msgBarHeight, setMsgBarHeight] = useState(msgBarMin);
-  // const [isAtBottom, setIsAtBottom] = useState(false);
   useEffect(() => {
     const messageBar = document.querySelector('.msgToSend') as HTMLTextAreaElement | null;
     
+    // keep the lowest messages readable
+    // this part handles message bar sizing and the spacing at the bottom to
     if(messageBar) {
       setMsgBarHeight(messageBar.clientHeight);
       const adjustMsgBarHeight = (e: Event) => {
@@ -205,44 +203,35 @@ function Messages() {
         >
           {msgs.map((msg) => (
             <div className='msg' key={msg.key}>
-              { msg.user === user ? (
-                <>
-                  <div className='msgDesc'>
-                    <h5><strong>{msg.user}</strong></h5> 
-                    <div className='spacing'/>
-                    <h6>{formatTimestamp(msg.timestamp)}</h6>
-                    <div className='spacing'/>
-                    <h5 className='options'><i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}></i></h5>
-                    <div className='spacing'/>
-                    <h5 className='options'><i className="fa-solid fa-pencil"></i></h5>
-                  </div>
-                  {msg.content.split('\n').map((line, index) => (
-                    <p key={index}>
-                        {line}
-                        {index !== msg.content.split('\n').length - 1 && <br />}
-                    </p>
-                  ))}
-                </>
-                ) :
-                (
-                <>
-                  <div className='msgDesc'>
-                    <h5><strong>{msg.user}</strong></h5> 
-                    <div className='spacing'></div>
-                    <h6>{formatTimestamp(msg.timestamp)}</h6>
-                  </div>
-                  {msg.content.split('\n').map((line, index) => (
-                    <p key={index}>
-                        {line}
-                        {index !== msg.content.split('\n').length - 1 && <br />}
-                    </p>
-                  ))}
-                </>
+              <div className='msgDesc'>
+                <h5><strong>{msg.user}</strong></h5> 
+                <div className='spacing'/>
+                <h6>{formatTimestamp(msg.timestamp)}</h6>
+                
+                {/* Show options if message belongs to the user */}
+                { msg.user === user ? (
+                    <>
+                      <div className='spacing'/>
+                      <h5 className='options'>
+                        <i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}/>
+                      </h5>
+                      <div className='spacing'/>
+                      <h5 className='options'>
+                        <i className="fa-solid fa-pencil"/>
+                      </h5>
+                    </>
+                  ) : (<></>)
+                }
+              </div>
+              {msg.content.split('\n').map((line, index) => (
+                <p key={index}>
+                  {line}
+                  {index !== msg.content.split('\n').length - 1 && <br />}
+                </p>
                 )
-              }
+              )}
             </div>
           ))}
-          
         </div>
         <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} room_name={chatroom} />
       </div>
