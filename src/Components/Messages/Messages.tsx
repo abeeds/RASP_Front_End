@@ -153,7 +153,8 @@ function Messages() {
 
   // this part handles message bar sizing and the spacing at the bottom to
   // keep the lowest messages readable
-  const [msgBarHeight, setMsgBarHeight] = useState(31);
+  const msgBarMin: number = 31;
+  const [msgBarHeight, setMsgBarHeight] = useState(msgBarMin);
   // const [isAtBottom, setIsAtBottom] = useState(false);
   useEffect(() => {
     const messageBar = document.querySelector('.msgToSend') as HTMLTextAreaElement | null;
@@ -162,13 +163,13 @@ function Messages() {
       setMsgBarHeight(messageBar.clientHeight);
       const adjustMsgBarHeight = (e: Event) => {
         const target = e.target as HTMLTextAreaElement;
-        target.style.height = '31px';
+        target.style.height = `${msgBarMin}px`;
         target.style.height = `${target.scrollHeight}px`;
       };
       
       if(messageBar.value === '') {
-        messageBar.style.height = '31px';
-        setMsgBarHeight(31);
+        messageBar.style.height = `${msgBarMin}px`;
+        setMsgBarHeight(msgBarMin);
       }
       
       messageBar.addEventListener('input', adjustMsgBarHeight);
@@ -229,7 +230,9 @@ function Messages() {
                     <div className='spacing'></div>
                     <h6>{formatTimestamp(msg.timestamp)}</h6>
                   </div>
-                  <p>{msg.content}</p>
+                  {msg.content.split('\n').map((line, index) => (
+                    <p key={index}>{line}<br></br></p>
+                  ))}
                 </>
                 )
               }
