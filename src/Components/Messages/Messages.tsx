@@ -25,11 +25,8 @@ interface Message {
 // This is the message bar at the bottom of the page
 function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageFormProps) {
   const [content, setContent] = useState('');
-
   const user = localStorage.getItem('user');
-
   const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
-
 
   const sendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -68,6 +65,7 @@ function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageForm
   );
 }
 
+
 function formatTimestamp(timestamp: number): string {
   const date: Date = new Date(timestamp * 1000);
   const month: string = String(date.getMonth() + 1).padStart(2,'0');
@@ -80,13 +78,12 @@ function formatTimestamp(timestamp: number): string {
   return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
+
 // This is the actual page
 function Messages() {
   const navigate = useNavigate();
-
   const roomParams = useParams();
   const chatroom: string = roomParams?.["chatroom"]?.toString() || '';
-
   const user = localStorage.getItem('user');
   const [error, setError] = useState('');
   const [msgs, setMsgs] = useState<Message[]>([]);
@@ -183,7 +180,8 @@ function Messages() {
 
   const messagesSpacing = {
     // the numbers being added accounts for spacing
-    // 1% is the 
+    // 1% is the msg bar's spacing from the bottom
+    // 30px accounts for the padding of the messages and msg bar
     paddingBottom: `calc(1% + ${msgBarHeight}px + 30px)`,
   }
 
