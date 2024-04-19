@@ -2,7 +2,8 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 import axios from 'axios';
 
-import { BACKEND_URL } from '../../constants';
+
+import { DEACTIVATE, GET_USERS } from '../../constants';
 
 
 interface DelUserFormProps {
@@ -29,7 +30,7 @@ function DelUserForm({ setError, fetchUsers }: DelUserFormProps) {
   const delUser = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios
-      .delete(`${BACKEND_URL}/deactivate/` + name + '/' + pass)
+      .delete(`${DEACTIVATE}` + name + '/' + pass)
       .then((response) => {
         setError(response.data.message);
         fetchUsers();
@@ -55,7 +56,7 @@ function Users() {
   const [users, setUsers] = useState<User[]>([]);
 
   const fetchUsers = () => {
-      axios.get(`${BACKEND_URL}/get_users`)
+      axios.get(`${GET_USERS}`)
         .then((response) => { 
           const usersObject = response.data;
           const keys = Object.keys(usersObject);

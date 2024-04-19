@@ -3,8 +3,9 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import { BACKEND_URL } from '../../constants';
+
 import { getAdmin } from '../../variables';
+import { GET_CHATROOMS, BAN, UPDATE_CHATROOM_DESC, WIPE_COLLECTION } from '../../constants';
 
 
 type ChatroomsData = {
@@ -44,7 +45,7 @@ function DelUserForm({ setError }: DelUserFormProps) {
   const delUser = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios
-      .delete(`${BACKEND_URL}/ban/` + name)
+      .delete(`${BAN}` + name)
       .then((response) => {
         setError(response.data.message);
       })
@@ -68,7 +69,7 @@ function UpdateRoomForm({ setError }: UpdateRoomFormProps) {
   const [chatroomsObject, setChatroomsObject] = useState<ChatroomsData>({});
 
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
-    axios.get(`${BACKEND_URL}/get_chatrooms`)
+    axios.get(`${GET_CHATROOMS}`)
       .then((response) => {
         setChatroomsObject(response.data);
       })
@@ -86,7 +87,7 @@ function UpdateRoomForm({ setError }: UpdateRoomFormProps) {
   const updateDesc = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios
-      .put(`${BACKEND_URL}/update_chatroom_desc`, { chatroom_name: name, description: desc })
+      .put(`${UPDATE_CHATROOM_DESC}`, { chatroom_name: name, description: desc })
       .then((response) => {
         setError(response.data.message);
       })
@@ -125,7 +126,7 @@ function WipeForm({ setError }: WipeFormProps) {
 
   const confirmWipe = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios.delete(`${BACKEND_URL}/wipe/` + collection + '/' + code)
+    axios.delete(`${WIPE_COLLECTION}` + collection + '/' + code)
       .then((response) => {
         setError(response.data.message);
       })

@@ -2,7 +2,8 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { BACKEND_URL } from '../../constants';
+
+import { GET_FORMS, UPDATE_PASS } from '../../constants';
 
 
 interface Field {
@@ -23,7 +24,7 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
 
   useEffect(() => {
     // Fetch form fields from backend
-    axios.get(`${BACKEND_URL}/get_forms`)
+    axios.get(`${GET_FORMS}`)
       .then(response => {
         console.log('response data', response.data)
         setFields(response.data);
@@ -60,7 +61,7 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
     */
     
     // Send answers to backend
-    axios.post(`${BACKEND_URL}/hform`, answers)
+    axios.put(`${UPDATE_PASS}`, answers)
       .then(response => {
         console.log('Submission successful:', response.data);
         // If needed, handle success response
