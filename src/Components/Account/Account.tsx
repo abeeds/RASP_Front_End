@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { GET_FORMS, HFORM } from '../../constants';
+import { GET_FORMS, UPDATE_PASS } from '../../constants';
 
 
 interface Field {
@@ -61,7 +61,7 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
     */
     
     // Send answers to backend
-    axios.post(`${HFORM}`, answers)
+    axios.put(`${UPDATE_PASS}`, answers)
       .then(response => {
         console.log('Submission successful:', response.data);
         // If needed, handle success response

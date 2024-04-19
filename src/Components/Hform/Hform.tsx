@@ -1,8 +1,9 @@
+// defunct page !!!
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { GET_FORMS, HFORM } from '../../constants';
+import { GET_FORMS, UPDATE_PASS } from '../../constants';
 
 
 interface Field {
