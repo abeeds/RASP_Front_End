@@ -12,10 +12,7 @@ export const GET_USERS = BACKEND_URL + "/get_users";
 export const LOGIN = BACKEND_URL + "/login/"; // name/password
 export const REGISTER = BACKEND_URL + "/register/" // name/password
 
-export const GET_CHATROOMS = BACKEND_URL + "/get_chatrooms";
-export const INSERT_CHATROOM = BACKEND_URL + "/insert_chatroom";
-export const UPDATE_CHATROOM_DESC = BACKEND_URL + "/update_chatroom_desc";
-
+export const CHATROOMS_URL = BACKEND_URL + "/chatrooms";
 export const MSG_URL = BACKEND_URL + "/messages";
 
 export const WIPE_COLLECTION = BACKEND_URL + "/wipe/";

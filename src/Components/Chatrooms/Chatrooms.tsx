@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 // import { setRoom } from '../../variables';
 
 import './Chatrooms.css';
-import { GET_CHATROOMS, INSERT_CHATROOM } from '../../constants';
+import { CHATROOMS_URL } from '../../constants';
 
 // Type Declarations
 interface AddChatroomFormProps {
@@ -30,7 +30,7 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
 
   const addChatroom = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios.post(`${INSERT_CHATROOM}`, {
+    axios.post(`${CHATROOMS_URL}`, {
       chatroom_name: name, description: description, owner: localStorage.getItem('user')
     })
       .then(() => {
@@ -66,7 +66,7 @@ function Chatrooms() {
   }, []); // Empty dependency array to run effect only once on mount
 
   const fetchChatrooms = () => {
-    axios.get(`${GET_CHATROOMS}`)
+    axios.get(`${CHATROOMS_URL}`)
       .then((response) => {
         const chatroomsObject = response.data;
         const keys = Object.keys(chatroomsObject);

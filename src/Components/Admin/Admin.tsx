@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 import { getAdmin } from '../../variables';
-import { GET_CHATROOMS, BAN, UPDATE_CHATROOM_DESC, WIPE_COLLECTION } from '../../constants';
+import { CHATROOMS_URL, BAN, WIPE_COLLECTION } from '../../constants';
 
 
 type ChatroomsData = {
@@ -69,7 +69,7 @@ function UpdateRoomForm({ setError }: UpdateRoomFormProps) {
   const [chatroomsObject, setChatroomsObject] = useState<ChatroomsData>({});
 
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
-    axios.get(`${GET_CHATROOMS}`)
+    axios.get(`${CHATROOMS_URL}`)
       .then((response) => {
         setChatroomsObject(response.data);
       })
@@ -87,7 +87,7 @@ function UpdateRoomForm({ setError }: UpdateRoomFormProps) {
   const updateDesc = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios
-      .put(`${UPDATE_CHATROOM_DESC}`, { chatroom_name: name, description: desc })
+      .put(`${CHATROOMS_URL}`, { chatroom_name: name, description: desc })
       .then((response) => {
         setError(response.data.message);
       })
