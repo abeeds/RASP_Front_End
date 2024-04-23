@@ -2,7 +2,6 @@ export const BACKEND_URL = import.meta.env.VITE_URL_PRE;
 export const ADMIN_KEY = 'avespaisnotamotorcycle'
 
 // ENDPOINTS
-// comments next to endpoints indicate parameters
 
 export const GET_FORMS = BACKEND_URL + "/get_forms";
 export const UPDATE_PASS = BACKEND_URL + "/update_password";
@@ -17,8 +16,6 @@ export const GET_CHATROOMS = BACKEND_URL + "/get_chatrooms";
 export const INSERT_CHATROOM = BACKEND_URL + "/insert_chatroom";
 export const UPDATE_CHATROOM_DESC = BACKEND_URL + "/update_chatroom_desc";
 
-export const GET_MSGS = BACKEND_URL + "/get_msgs/"; // room_name
-export const DELETE_MSG = BACKEND_URL + "/delete_msg/"; // message_id
-export const WRITE_MSG = BACKEND_URL + "/write_msg"; 
+export const MSG_URL = BACKEND_URL + "/messages";
 
 export const WIPE_COLLECTION = BACKEND_URL + "/wipe/";
