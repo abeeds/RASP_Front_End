@@ -15,4 +15,5 @@ export const REGISTER = BACKEND_URL + "/register/" // name/password
 export const CHATROOMS_URL = BACKEND_URL + "/chatrooms";
 export const MSG_URL = BACKEND_URL + "/messages";
 
+export const FETCH_FORM = BACKEND_URL + "/forms/"; // form_name
 export const WIPE_COLLECTION = BACKEND_URL + "/wipe/";

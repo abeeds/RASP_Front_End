@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { GET_FORMS, UPDATE_PASS } from '../../constants';
+import { FETCH_FORM, UPDATE_PASS } from '../../constants';
 
 
 interface Field {
@@ -24,7 +24,7 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
 
   useEffect(() => {
     // Fetch form fields from backend
-    axios.get(`${GET_FORMS}`)
+    axios.get(`${FETCH_FORM}/UpdatePass`)
       .then(response => {
         console.log('response data', response.data)
         setFields(response.data);
