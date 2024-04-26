@@ -8,6 +8,11 @@ import { useParams } from 'react-router-dom';
 import './Messages.css';
 import { MSG_URL} from '../../constants';
 
+// Message modes
+const EDIT: string = "edit";
+const REPLY: string = "reply";
+const NORMAL: string = "normal";
+
 // Type Declarations
 interface SendMessageFormProps {
   setError: (error: string) => void;
@@ -23,7 +28,7 @@ interface Message {
 }
 
 // This is the message bar at the bottom of the page
-function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageFormProps) {
+function SendMessageForm({ setError, fetchMessages, room_name /*, message_mode, set_message_mode*/ }: SendMessageFormProps) {
   const [content, setContent] = useState('');
   const user = localStorage.getItem('user');
   const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
@@ -48,15 +53,15 @@ function SendMessageForm({ setError, fetchMessages, room_name }: SendMessageForm
 
   return (
     <div className='msgFormWrap'>
-      <form 
-        className='SendMsgForm' 
+      <form
+        className='SendMsgForm'
         onSubmit={sendMessage}
       >
-        <textarea  
-          id="content" 
-          className='msgToSend' 
-          value={content} 
-          onChange={changeContent} 
+        <textarea
+          id="content"
+          className='msgToSend'
+          value={content}
+          onChange={changeContent}
           placeholder={`Send a message to ${room_name}`}
         />
         <button type="submit" className='msgSubmit'>Send</button>
@@ -81,12 +86,47 @@ function formatTimestamp(timestamp: number): string {
 
 // This is the actual page
 function Messages() {
+  const msgBarMin: number = 31;
   const navigate = useNavigate();
   const roomParams = useParams();
   const chatroom: string = roomParams?.["chatroom"]?.toString() || '';
   const user = localStorage.getItem('user');
   const [error, setError] = useState('');
   const [msgs, setMsgs] = useState<Message[]>([]);
+  const [msgBarHeight, setMsgBarHeight] = useState(msgBarMin);
+  const [messageMode, setMessageMode] = useState(NORMAL); // modes defined at top
+  const [editId, setEditId] = useState('');
+  const [replyId, setReplyId] = useState(''); // unimplemented for now
+
+  const adjustMsgBarHeight = (e: Event) => {
+    const target = e.target as HTMLTextAreaElement;
+    target.style.height = `${msgBarMin}px`;
+    target.style.height = `${target.scrollHeight}px`;
+  };
+
+  const setToNormal = () => {
+    setMessageMode(NORMAL);
+    setEditId('');
+    setReplyId('');
+  }
+
+  function setToEdit(msgID:string, originalMsg:string) {
+    setMessageMode(EDIT);
+    setEditId(msgID);
+    setReplyId('');
+
+    const messageBar = document.querySelector('.msgToSend') as HTMLTextAreaElement | null;
+    if(messageBar){
+      messageBar.value = originalMsg;
+      setMsgBarHeight(messageBar.clientHeight);
+    }
+  }
+
+  function setToReply(msgID:string) {
+    setMessageMode(REPLY);
+    setReplyId(msgID);
+    setEditId('');
+  }
 
   const fetchMessages = () => {
     axios.get(`${MSG_URL}/${chatroom}`)
@@ -147,8 +187,6 @@ function Messages() {
     }
   }, [prevScroll]);
   
-  const msgBarMin: number = 31;
-  const [msgBarHeight, setMsgBarHeight] = useState(msgBarMin);
   useEffect(() => {
     const messageBar = document.querySelector('.msgToSend') as HTMLTextAreaElement | null;
     
@@ -156,11 +194,6 @@ function Messages() {
     // this part handles message bar sizing and the spacing at the bottom to
     if(messageBar) {
       setMsgBarHeight(messageBar.clientHeight);
-      const adjustMsgBarHeight = (e: Event) => {
-        const target = e.target as HTMLTextAreaElement;
-        target.style.height = `${msgBarMin}px`;
-        target.style.height = `${target.scrollHeight}px`;
-      };
       
       if(messageBar.value === '') {
         messageBar.style.height = `${msgBarMin}px`;
@@ -213,11 +246,17 @@ function Messages() {
                     <>
                       <div className='spacing'/>
                       <h5 className='options'>
-                        <i className="fa-regular fa-trash-can" onClick={() => {deleteMessage(msg.key)}}/>
+                        <i className="fa-regular fa-trash-can" 
+                          onClick={() => {deleteMessage(msg.key)}}
+                        />
                       </h5>
                       <div className='spacing'/>
                       <h5 className='options'>
-                        <i className="fa-solid fa-pencil"/>
+                        <i className="fa-solid fa-pencil"
+                          onClick={() => {setToEdit(msg.key, msg.content);
+                            console.log(msg.key);
+                          }}
+                        />
                       </h5>
                     </>
                   ) : (<></>)
