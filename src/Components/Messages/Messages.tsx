@@ -110,7 +110,7 @@ function Messages() {
     setReplyId('');
   }
 
-  function setToEdit(msgID:string, originalMsg:string) {
+  const setToEdit = (msgID:string, originalMsg:string) => {
     setMessageMode(EDIT);
     setEditId(msgID);
     setReplyId('');
@@ -122,7 +122,7 @@ function Messages() {
     }
   }
 
-  function setToReply(msgID:string) {
+  const setToReply = (msgID:string) => {
     setMessageMode(REPLY);
     setReplyId(msgID);
     setEditId('');
