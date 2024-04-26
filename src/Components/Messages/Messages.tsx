@@ -6,8 +6,7 @@ import { useParams } from 'react-router-dom';
 
 
 import './Messages.css';
-import { MSG_URL} from '../../constants';
-import { measureMemory } from 'vm';
+import { MSG_URL } from '../../constants';
 
 // Message modes
 const EDIT: string = "edit";
@@ -20,7 +19,7 @@ interface SendMessageFormProps {
   fetchMessages: (chatroom: string) => void;
   content: string;
   setContent: (content: string) => void;
-  room_name: string;
+  roomName: string;
 }
 
 interface Message {
@@ -31,7 +30,7 @@ interface Message {
 }
 
 // This is the message bar at the bottom of the page
-function SendMessageForm({ setError, fetchMessages, room_name, content, setContent /*, message_mode, set_message_mode*/ }: SendMessageFormProps) {
+function SendMessageForm({ setError, fetchMessages, roomName, content, setContent /*, message_mode, set_message_mode*/ }: SendMessageFormProps) {
   
   const user = localStorage.getItem('user');
   const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
@@ -44,11 +43,11 @@ function SendMessageForm({ setError, fetchMessages, room_name, content, setConte
       return;
     }
 
-    axios.post(`${MSG_URL}`, { chatroom_name: room_name, username: user, content: content.trim() } )
+    axios.post(`${MSG_URL}`, { chatroom_name: roomName, username: user, content: content.trim() } )
       .then(() => {
         setError('');
         setContent('');
-        fetchMessages(room_name);
+        fetchMessages(roomName);
         window.scrollTo(0, document.body.scrollHeight);
       })
       .catch((error) => { setError(error.response.data.message); });
@@ -65,7 +64,7 @@ function SendMessageForm({ setError, fetchMessages, room_name, content, setConte
           className='msgToSend'
           value={content}
           onChange={changeContent}
-          placeholder={`Send a message to ${room_name}`}
+          placeholder={`Send a message to ${roomName}`}
         />
         <button type="submit" className='msgSubmit'>Send</button>
       </form>
@@ -125,7 +124,6 @@ function Messages() {
       setTimeout(() => {
         adjustMsgBarHeight(messageBar);
       }, 0);
-      adjustMsgBarHeight(messageBar);
     }
   }
 
@@ -261,7 +259,6 @@ function Messages() {
                       <h5 className='options'>
                         <i className="fa-solid fa-pencil"
                           onClick={() => {setToEdit(msg.key, msg.content);
-                            console.log(msg.key);
                           }}
                         />
                       </h5>
@@ -282,7 +279,7 @@ function Messages() {
         <SendMessageForm 
           setError={setError} 
           fetchMessages={() => fetchMessages()} 
-          room_name={chatroom}
+          roomName={chatroom}
           content={content}
           setContent={setContent}
         />
