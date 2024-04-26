@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import './Messages.css';
 import { MSG_URL} from '../../constants';
+import { measureMemory } from 'vm';
 
 // Message modes
 const EDIT: string = "edit";
@@ -17,6 +18,8 @@ const NORMAL: string = "normal";
 interface SendMessageFormProps {
   setError: (error: string) => void;
   fetchMessages: (chatroom: string) => void;
+  content: string;
+  setContent: (content: string) => void;
   room_name: string;
 }
 
@@ -28,8 +31,8 @@ interface Message {
 }
 
 // This is the message bar at the bottom of the page
-function SendMessageForm({ setError, fetchMessages, room_name /*, message_mode, set_message_mode*/ }: SendMessageFormProps) {
-  const [content, setContent] = useState('');
+function SendMessageForm({ setError, fetchMessages, room_name, content, setContent /*, message_mode, set_message_mode*/ }: SendMessageFormProps) {
+  
   const user = localStorage.getItem('user');
   const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
 
@@ -92,14 +95,14 @@ function Messages() {
   const chatroom: string = roomParams?.["chatroom"]?.toString() || '';
   const user = localStorage.getItem('user');
   const [error, setError] = useState('');
+  const [content, setContent] = useState('');
   const [msgs, setMsgs] = useState<Message[]>([]);
   const [msgBarHeight, setMsgBarHeight] = useState(msgBarMin);
   const [messageMode, setMessageMode] = useState(NORMAL); // modes defined at top
   const [editId, setEditId] = useState('');
   const [replyId, setReplyId] = useState(''); // unimplemented for now
 
-  const adjustMsgBarHeight = (e: Event) => {
-    const target = e.target as HTMLTextAreaElement;
+  const adjustMsgBarHeight = (target: HTMLTextAreaElement) => {
     target.style.height = `${msgBarMin}px`;
     target.style.height = `${target.scrollHeight}px`;
   };
@@ -117,8 +120,12 @@ function Messages() {
 
     const messageBar = document.querySelector('.msgToSend') as HTMLTextAreaElement | null;
     if(messageBar){
-      messageBar.value = originalMsg;
+      setContent(originalMsg);
       setMsgBarHeight(messageBar.clientHeight);
+      setTimeout(() => {
+        adjustMsgBarHeight(messageBar);
+      }, 0);
+      adjustMsgBarHeight(messageBar);
     }
   }
 
@@ -200,11 +207,11 @@ function Messages() {
         setMsgBarHeight(msgBarMin);
       }
       
-      messageBar.addEventListener('input', adjustMsgBarHeight);
+      messageBar.addEventListener('input', () => adjustMsgBarHeight(messageBar));
 
       // clean up to avoid mem leak
       return () => {
-        messageBar.removeEventListener('input', adjustMsgBarHeight);
+        messageBar.removeEventListener('input', () => adjustMsgBarHeight(messageBar));
       }
     }
   });
@@ -272,7 +279,13 @@ function Messages() {
             </div>
           ))}
         </div>
-        <SendMessageForm setError={setError} fetchMessages={() => fetchMessages()} room_name={chatroom} />
+        <SendMessageForm 
+          setError={setError} 
+          fetchMessages={() => fetchMessages()} 
+          room_name={chatroom}
+          content={content}
+          setContent={setContent}
+        />
       </div>
     </div>
   );
