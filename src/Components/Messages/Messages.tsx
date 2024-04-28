@@ -34,6 +34,7 @@ interface Message {
   timestamp: number;
   user: string;
   content: string;
+  last_edited?: number;
 }
 
 const adjustMsgBarHeight = (target: HTMLTextAreaElement) => {
@@ -194,20 +195,14 @@ function Messages() {
     axios.get(`${MSG_URL}/${chatroom}`)
       .then((response) => {
         const msgsObject = response.data;
-        const keys = Object.keys(msgsObject);
-        const msgsArray = keys.map((key) => ([
+        const msgsArray: Message[] = Object.keys(msgsObject).map((key) => ({
           key,
-          msgsObject[key].Timestamp,
-          msgsObject[key].User,
-          msgsObject[key].Content
-        ]));
-        const msgsFetch: Message[] = msgsArray.map(([key, timestamp, user, content]) => ({
-          key,
-          timestamp,
-          user,
-          content
-        }));
-        setMsgs(msgsFetch);
+          timestamp: msgsObject[key].Timestamp,
+          user: msgsObject[key].User,
+          content: msgsObject[key].Content,
+          last_edited: msgsObject[key]['Last Edited']
+        }))
+        setMsgs(msgsArray);
       })
       .catch(() => { setError('oopsie woopsie'); });
   };
@@ -307,6 +302,11 @@ function Messages() {
                 <h5><strong>{msg.user}</strong></h5> 
                 <div className='spacing'/>
                 <h6>{formatTimestamp(msg.timestamp)}</h6>
+                {msg.last_edited ? 
+                <>
+                  <div className='spacing'/>
+                  <h6 title={formatTimestamp(msg.last_edited)}>(edited)</h6>
+                </> : null}
                 
                 {/* Show options if message belongs to the user */}
                 { msg.user === user ? (
