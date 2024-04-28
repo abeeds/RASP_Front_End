@@ -44,10 +44,12 @@ const adjustMsgBarHeight = (target: HTMLTextAreaElement) => {
 
 const setToNormal = (setMessageMode: (messageMode: string) => void, 
                      setEditId: (editId: string) => void, 
-                     setReplyId: (replyId: string) => void) => {
+                     setReplyId: (replyId: string) => void,
+                     setContent: (content: string) => void) => {
   setMessageMode(NORMAL);
   setEditId('');
   setReplyId('');
+  setContent('');
 }
 
 const setToEdit = (setMessageMode: (messageMode: string) => void, 
@@ -58,8 +60,6 @@ const setToEdit = (setMessageMode: (messageMode: string) => void,
                    setContent: (content: string) => void,
                    setMsgBarHeight: (msgBarHeight: number) => void) => {
   setMessageMode(EDIT);
-  setEditId(msgID);
-  setEditId(msgID);
   setEditId(msgID);
   setReplyId('');
 
@@ -127,7 +127,7 @@ function SendMessageForm({ setError,
         setError('');
         setContent('');
         fetchMessages(roomName);
-        setToNormal(setMessageMode, setEditId, setReplyId);
+        setToNormal(setMessageMode, setEditId, setReplyId, setContent);
       })
       .catch((error) => { setError(error.response.data.message); });
     }
@@ -150,7 +150,7 @@ function SendMessageForm({ setError,
           {messageMode === EDIT ? 'Edit' : 'Send'}
         </button>
         {messageMode === EDIT && (<button onClick={() => {
-          setToNormal(setMessageMode, setEditId, setReplyId)
+          setToNormal(setMessageMode, setEditId, setReplyId, setContent)
         }}>Cancel Edit</button>)}
       </form>
     </div>
@@ -310,7 +310,7 @@ function Messages() {
                         <i className="fa-regular fa-trash-can" 
                           onClick={() => {deleteMessage(msg.key)
                                           if(msg.key === editId || msg.key === replyId)  {
-                                            setToNormal(setMessageMode, setEditId, setReplyId);
+                                            setToNormal(setMessageMode, setEditId, setReplyId, setContent);
                                           }
                         }}
                         />
