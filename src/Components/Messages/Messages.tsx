@@ -309,7 +309,9 @@ function Messages() {
                       <h5 className='options'>
                         <i className="fa-regular fa-trash-can" 
                           onClick={() => {deleteMessage(msg.key)
-                                          setToNormal(setMessageMode, setEditId, setReplyId)
+                                          if(msg.key === editId || msg.key === replyId)  {
+                                            setToNormal(setMessageMode, setEditId, setReplyId);
+                                          }
                         }}
                         />
                       </h5>
