@@ -114,7 +114,7 @@ function SendMessageForm({ setError,
       .then(() => {
         setError('');
         setContent('');
-        fetchMessages(roomName);
+        fetchMessages;
         window.scrollTo(0, document.body.scrollHeight);
       })
       .catch((error) => { setError(error.response.data.message); });
@@ -127,7 +127,7 @@ function SendMessageForm({ setError,
       .then(() => {
         setError('');
         setContent('');
-        fetchMessages(roomName);
+        fetchMessages;
         setToNormal(setMessageMode, setEditId, setReplyId, setContent);
       })
       .catch((error) => { setError(error.response.data.message); });
@@ -211,11 +211,20 @@ function Messages() {
     axios.delete(`${MSG_URL}/${msgKey}`)
       .then(() => {
         setError('');
+        fetchMessages;
       })
       .catch((error) => { setError(error.response.data.message); });
   }
 
-  useEffect(fetchMessages,)
+  // fetch messages on first render
+  // without this the page is blank for 3 seconds
+  useEffect(
+    fetchMessages , []);
+
+  // fetch continuously every 3 seconds
+  useEffect(() => {
+    setTimeout(fetchMessages, 3000);
+  },);
 
   // jump to bottom of page after first render
   useEffect(() => {
@@ -351,7 +360,7 @@ function Messages() {
         </div>
         <SendMessageForm 
           setError={setError} 
-          fetchMessages={() => fetchMessages()} 
+          fetchMessages={fetchMessages} 
           roomName={chatroom}
           content={content}
           setContent={setContent}
