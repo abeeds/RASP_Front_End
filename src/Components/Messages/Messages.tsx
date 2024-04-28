@@ -13,13 +13,20 @@ const EDIT: string = "edit";
 const REPLY: string = "reply";
 const NORMAL: string = "normal";
 
+const msgBarMin: number = 31;
+
 // Type Declarations
 interface SendMessageFormProps {
   setError: (error: string) => void;
   fetchMessages: (chatroom: string) => void;
   content: string;
   setContent: (content: string) => void;
+  messageMode: string;
+  setMessageMode: (messageMode: string) => void;
   roomName: string;
+  editId: string;
+  setEditId: (editId: string) => void;
+  setReplyId: (replyId: string) => void;
 }
 
 interface Message {
@@ -29,8 +36,63 @@ interface Message {
   content: string;
 }
 
+const adjustMsgBarHeight = (target: HTMLTextAreaElement) => {
+  target.style.height = `${msgBarMin}px`;
+  target.style.height = `${target.scrollHeight}px`;
+};
+
+
+const setToNormal = (setMessageMode: (messageMode: string) => void, 
+                     setEditId: (editId: string) => void, 
+                     setReplyId: (replyId: string) => void) => {
+  setMessageMode(NORMAL);
+  setEditId('');
+  setReplyId('');
+}
+
+const setToEdit = (setMessageMode: (messageMode: string) => void, 
+                   setEditId: (editId: string) => void, 
+                   setReplyId: (replyId: string) => void, 
+                   msgID:string, 
+                   originalMsg:string,
+                   setContent: (content: string) => void,
+                   setMsgBarHeight: (msgBarHeight: number) => void) => {
+  setMessageMode(EDIT);
+  setEditId(msgID);
+  setEditId(msgID);
+  setEditId(msgID);
+  setReplyId('');
+
+  const messageBar = document.querySelector('.msgToSend') as HTMLTextAreaElement | null;
+  if(messageBar){
+    setContent(originalMsg);
+    setMsgBarHeight(messageBar.clientHeight);
+    setTimeout(() => {
+      adjustMsgBarHeight(messageBar);
+    }, 0);
+  }
+}
+
+const setToReply = (setMessageMode: (messageMode: string) => void,
+                    setReplyId: (replyId: string) => void,
+                    setEditId: (editId: string) => void,
+                    msgID:string) => {
+  setMessageMode(REPLY);
+  setReplyId(msgID);
+  setEditId('');
+}
+
 // This is the message bar at the bottom of the page
-function SendMessageForm({ setError, fetchMessages, roomName, content, setContent /*, message_mode, set_message_mode*/ }: SendMessageFormProps) {
+function SendMessageForm({ setError, 
+  fetchMessages, 
+  roomName, 
+  content, 
+  setContent , 
+  messageMode, 
+  setMessageMode, 
+  editId, 
+  setEditId,
+  setReplyId}: SendMessageFormProps) {
   
   const user = localStorage.getItem('user');
   const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
@@ -43,7 +105,11 @@ function SendMessageForm({ setError, fetchMessages, roomName, content, setConten
       return;
     }
 
-    axios.post(`${MSG_URL}`, { chatroom_name: roomName, username: user, content: content.trim() } )
+    // check which way to submit
+    if(messageMode === NORMAL) {
+      axios.post(`${MSG_URL}`, { chatroom_name: roomName, 
+                                 username: user, 
+                                 content: content.trim() } )
       .then(() => {
         setError('');
         setContent('');
@@ -51,6 +117,20 @@ function SendMessageForm({ setError, fetchMessages, roomName, content, setConten
         window.scrollTo(0, document.body.scrollHeight);
       })
       .catch((error) => { setError(error.response.data.message); });
+    }
+    else if(messageMode == EDIT) {
+      axios.put(`${MSG_URL}`, {
+        _id: editId,
+        content: content
+      })
+      .then(() => {
+        setError('');
+        setContent('');
+        fetchMessages(roomName);
+        setToNormal(setMessageMode, setEditId, setReplyId);
+      })
+      .catch((error) => { setError(error.response.data.message); });
+    }
   }
 
   return (
@@ -67,6 +147,9 @@ function SendMessageForm({ setError, fetchMessages, roomName, content, setConten
           placeholder={`Send a message to ${roomName}`}
         />
         <button type="submit" className='msgSubmit'>Send</button>
+        {messageMode === EDIT && (<button onClick={() => {
+          setToNormal(setMessageMode, setEditId, setReplyId)
+        }}>Cancel Edit</button>)}
       </form>
     </div>
   );
@@ -88,7 +171,6 @@ function formatTimestamp(timestamp: number): string {
 
 // This is the actual page
 function Messages() {
-  const msgBarMin: number = 31;
   const navigate = useNavigate();
   const roomParams = useParams();
   const chatroom: string = roomParams?.["chatroom"]?.toString() || '';
@@ -100,38 +182,6 @@ function Messages() {
   const [messageMode, setMessageMode] = useState(NORMAL); // modes defined at top
   const [editId, setEditId] = useState('');
   const [replyId, setReplyId] = useState(''); // unimplemented for now
-
-  const adjustMsgBarHeight = (target: HTMLTextAreaElement) => {
-    target.style.height = `${msgBarMin}px`;
-    target.style.height = `${target.scrollHeight}px`;
-  };
-
-  const setToNormal = () => {
-    setMessageMode(NORMAL);
-    setEditId('');
-    setReplyId('');
-  }
-
-  const setToEdit = (msgID:string, originalMsg:string) => {
-    setMessageMode(EDIT);
-    setEditId(msgID);
-    setReplyId('');
-
-    const messageBar = document.querySelector('.msgToSend') as HTMLTextAreaElement | null;
-    if(messageBar){
-      setContent(originalMsg);
-      setMsgBarHeight(messageBar.clientHeight);
-      setTimeout(() => {
-        adjustMsgBarHeight(messageBar);
-      }, 0);
-    }
-  }
-
-  const setToReply = (msgID:string) => {
-    setMessageMode(REPLY);
-    setReplyId(msgID);
-    setEditId('');
-  }
 
   const fetchMessages = () => {
     axios.get(`${MSG_URL}/${chatroom}`)
@@ -258,8 +308,15 @@ function Messages() {
                       <div className='spacing'/>
                       <h5 className='options'>
                         <i className="fa-solid fa-pencil"
-                          onClick={() => {setToEdit(msg.key, msg.content);
-                          }}
+                          onClick={() => {setToEdit(setMessageMode,
+                                                    setEditId,
+                                                    setReplyId,
+                                                    msg.key,
+                                                    msg.content,
+                                                    setContent,
+                                                    setMsgBarHeight);
+                                          }
+                                  }
                         />
                       </h5>
                     </>
@@ -282,6 +339,11 @@ function Messages() {
           roomName={chatroom}
           content={content}
           setContent={setContent}
+          messageMode={messageMode}
+          setMessageMode={setMessageMode}
+          editId={editId}
+          setEditId={setEditId}
+          setReplyId={setReplyId}
         />
       </div>
     </div>
