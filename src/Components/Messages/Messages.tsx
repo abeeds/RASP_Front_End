@@ -146,7 +146,9 @@ function SendMessageForm({ setError,
           onChange={changeContent}
           placeholder={`Send a message to ${roomName}`}
         />
-        <button type="submit" className='msgSubmit'>Send</button>
+        <button type="submit" className='msgSubmit'>
+          {messageMode === EDIT ? 'Edit' : 'Send'}
+        </button>
         {messageMode === EDIT && (<button onClick={() => {
           setToNormal(setMessageMode, setEditId, setReplyId)
         }}>Cancel Edit</button>)}
