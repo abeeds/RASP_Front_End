@@ -8,6 +8,10 @@ import { useState, useEffect } from 'react';
 
 import './App.css';
 
+interface FormProps {
+  handleSubmit: (answers: Record<string, string>) => void;
+}
+
 import Navbar from './Components/Navbar';
 import Login from './Components/Login';
 import Users from './Components/Users';
@@ -22,6 +26,10 @@ function App() {
   // previously had time as first param, but it was creating
   // an error with TypeScript so I removed it.
   const [, setTime] = useState<Date>(new Date());
+
+  const handleSubmit: FormProps['handleSubmit'] = (answers) => {
+    console.log("Form submitted with answers ", answers);
+  }
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -39,7 +47,7 @@ function App() {
         <Route path="chatrooms" element={<Chatrooms/>} />
         <Route path="chatrooms/:chatroom" element={<Messages/>} />
         <Route path="admin" element={<Admin/>} />
-        <Route path="account" element={<Account/>} />
+        <Route path="account" element={<Account handleSubmit={handleSubmit} />} />
         <Route path="hform" element={<Hform/>} />
       </Routes>
     </BrowserRouter>

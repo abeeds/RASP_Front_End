@@ -111,14 +111,14 @@ Account.propTypes = {
 };
 
 const Hform: React.FC = () => {
-  return (
-    <Account handleSubmit={(answers) => {
+  const handleSubmit = (answers: Record<string, string>) => {
       // Log individual elements of answers
       Object.entries(answers).forEach(([key, value]) => {
         console.log(`${key}: ${value}`);
       });
-    }} />
-  );
+    };
+
+  return <Account handleSubmit={handleSubmit} />;
 }
 
 export default Account;
