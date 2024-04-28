@@ -149,9 +149,14 @@ function SendMessageForm({ setError,
         <button type="submit" className='msgSubmit'>
           {messageMode === EDIT ? 'Edit' : 'Send'}
         </button>
-        {messageMode === EDIT && (<button onClick={() => {
-          setToNormal(setMessageMode, setEditId, setReplyId, setContent)
-        }}>Cancel Edit</button>)}
+        {messageMode === EDIT && (
+          <button 
+            className='msgSubmit' 
+            onClick={() => {setToNormal(setMessageMode, setEditId, setReplyId, setContent)}}
+          >
+            Cancel
+          </button>
+        )}
       </form>
     </div>
   );
@@ -244,6 +249,7 @@ function Messages() {
     }
   }, [prevScroll]);
   
+  // this resizes the message bar based on the text
   useEffect(() => {
     const messageBar = document.querySelector('.msgToSend') as HTMLTextAreaElement | null;
     
