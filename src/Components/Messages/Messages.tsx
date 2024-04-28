@@ -292,7 +292,11 @@ function Messages() {
           className='messages'
         >
           {msgs.map((msg) => (
-            <div className='msg' key={msg.key}>
+            <div 
+              className='msg'
+              id={msg.key === editId || msg.key === replyId ? 'selected' : ''}
+              key={msg.key}
+            >
               <div className='msgDesc'>
                 <h5><strong>{msg.user}</strong></h5> 
                 <div className='spacing'/>
@@ -304,7 +308,9 @@ function Messages() {
                       <div className='spacing'/>
                       <h5 className='options'>
                         <i className="fa-regular fa-trash-can" 
-                          onClick={() => {deleteMessage(msg.key)}}
+                          onClick={() => {deleteMessage(msg.key)
+                                          setToNormal(setMessageMode, setEditId, setReplyId)
+                        }}
                         />
                       </h5>
                       <div className='spacing'/>

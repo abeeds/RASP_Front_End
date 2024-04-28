@@ -11,6 +11,9 @@ html {
   --white: rgb(255, 255, 255);
   --bg_color: rgb(26, 26, 26);
   --bg_hover: #292929;
+  --bg_selected: #553e13;
+  --bg_selected_hover: #6d4f18;
+  
 
   --background-color: var(--white);
   --accent-color: var(--dark);

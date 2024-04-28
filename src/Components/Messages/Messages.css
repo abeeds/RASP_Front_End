@@ -40,6 +40,14 @@
   display: inline-block;
 }
 
+#selected {
+  background-color: var(--bg_selected);
+}
+
+#selected:hover {
+  background-color: var(--bg_selected_hover);
+}
+
 .msgDesc {
   display: flex;
   align-items: center;
