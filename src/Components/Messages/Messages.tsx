@@ -18,7 +18,7 @@ const msgBarMin: number = 31;
 // Type Declarations
 interface SendMessageFormProps {
   setError: (error: string) => void;
-  fetchMessages: (chatroom: string) => void;
+  fetchMessages: () => void;
   content: string;
   setContent: (content: string) => void;
   messageMode: string;
@@ -114,7 +114,7 @@ function SendMessageForm({ setError,
       .then(() => {
         setError('');
         setContent('');
-        fetchMessages;
+        fetchMessages();
         window.scrollTo(0, document.body.scrollHeight);
       })
       .catch((error) => { setError(error.response.data.message); });
@@ -127,7 +127,7 @@ function SendMessageForm({ setError,
       .then(() => {
         setError('');
         setContent('');
-        fetchMessages;
+        fetchMessages();
         setToNormal(setMessageMode, setEditId, setReplyId, setContent);
       })
       .catch((error) => { setError(error.response.data.message); });
@@ -203,6 +203,7 @@ function Messages() {
           last_edited: msgsObject[key]['Last Edited']
         }))
         setMsgs(msgsArray);
+        console.log("msgs fetched.");
       })
       .catch(() => { setError('oopsie woopsie'); });
   };
@@ -211,20 +212,26 @@ function Messages() {
     axios.delete(`${MSG_URL}/${msgKey}`)
       .then(() => {
         setError('');
-        fetchMessages;
+        fetchMessages();
       })
       .catch((error) => { setError(error.response.data.message); });
   }
 
   // fetch messages on first render
   // without this the page is blank for 3 seconds
-  useEffect(
-    fetchMessages , []);
+  useEffect(()=> {
+    fetchMessages();
+  }
+    
+    , []);
 
-  // fetch continuously every 3 seconds
   useEffect(() => {
-    setTimeout(fetchMessages, 3000);
-  },);
+    const interval = setInterval(() => {
+      fetchMessages();
+    }, 5000);
+  
+    return () => clearInterval(interval);
+  }, [])
 
   // jump to bottom of page after first render
   useEffect(() => {
