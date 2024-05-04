@@ -43,7 +43,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="login" element={<Login/>} />
-        <Route path="users" element={<Users/>} />
+        {/*<Route path="users" element={<Users/>} />*/} {/*Add back for debug purposes only*/}
         <Route path="chatrooms" element={<Chatrooms/>} />
         <Route path="chatrooms/:chatroom" element={<Messages/>} />
         <Route path="admin" element={<Admin/>} />

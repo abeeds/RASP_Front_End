@@ -221,17 +221,7 @@ function Messages() {
   // without this the page is blank for 3 seconds
   useEffect(()=> {
     fetchMessages();
-  }
-    
-    , []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchMessages();
-    }, 5000);
-  
-    return () => clearInterval(interval);
-  }, [])
+  }, []);
 
   // jump to bottom of page after first render
   useEffect(() => {
@@ -240,6 +230,16 @@ function Messages() {
     }, 100);
   }, []);
 
+  // get messages every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchMessages();
+    }, 5000);
+  
+    return () => clearInterval(interval);
+  }, [])
+
+  
   // currently a WIP
   // when user scrolls to the top, load more messages
   const [prevScroll, setprevScroll] = useState(0);
