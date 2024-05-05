@@ -8,7 +8,7 @@ export const UPDATE_PASS = BACKEND_URL + "/update_password";
 
 export const BAN = BACKEND_URL + "/users/ban/"; // username
 export const DEACTIVATE = BACKEND_URL + "/users/deactivate/";
-export const GET_USERS = BACKEND_URL + "/users/get_users";
+export const GET_USERS = BACKEND_URL + "/users";
 export const LOGIN = BACKEND_URL + "/users/login/"; // name/password
 export const REGISTER = BACKEND_URL + "/users/register/" // name/password
 
