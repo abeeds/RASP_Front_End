@@ -14,12 +14,13 @@ interface FormProps {
 
 import Navbar from './Components/Navbar';
 import Login from './Components/Login';
-import Users from './Components/Users';
+// import Users from './Components/Users';
 import Chatrooms from './Components/Chatrooms';
 import Messages from './Components/Messages';
 import Admin from './Components/Admin';
 import Account from './Components/Account';
 import Hform from './Components/Hform';
+import Home from './Components/Home';
 
 function App() {
   
@@ -42,6 +43,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
+        <Route path='' element={<Home/>}/>
         <Route path="login" element={<Login/>} />
         {/*<Route path="users" element={<Users/>} />*/} {/*Add back for debug purposes only*/}
         <Route path="chatrooms" element={<Chatrooms/>} />
