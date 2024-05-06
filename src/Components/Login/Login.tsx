@@ -114,7 +114,7 @@ function LoginForm({setError}: LoginFormProps) {
               maxLength={maxUserLen}
             />
 
-            <label htmlFor="pass">Password (insecure)</label>
+            <label htmlFor="pass">Password</label>
             <input 
               type="password" 
               id="pass" 
@@ -124,7 +124,7 @@ function LoginForm({setError}: LoginFormProps) {
               maxLength={maxPassLen}
             />
             
-            <label htmlFor="pass">Confirm Password (insecure)</label>
+            <label htmlFor="pass">Confirm Password</label>
             <input 
               type="password" 
               id="passConfirm" 
@@ -157,7 +157,7 @@ function LoginForm({setError}: LoginFormProps) {
               maxLength={maxUserLen}
             />
             
-            <label htmlFor="pass">Password (insecure)</label>
+            <label htmlFor="pass">Password</label>
             <input 
               type="password" 
               id="pass" 
