@@ -16,6 +16,11 @@ interface LoginFormProps {
   setError: (error: string) => void;
 }
 
+function isLoggedIn() {
+  const user = localStorage.getItem('user');
+  return user !== null && user !== undefined;
+}
+
 
 function LoginForm({setError}: LoginFormProps) {
   const navigate = useNavigate();
@@ -186,6 +191,11 @@ function LoginForm({setError}: LoginFormProps) {
 
 function Login() {
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+  if(isLoggedIn()) {
+    navigate('/chatrooms');
+    return <></>
+  }
 
   return (
     <div className="wrapper">
