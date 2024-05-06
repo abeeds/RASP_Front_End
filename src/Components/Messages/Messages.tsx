@@ -1,5 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -83,6 +83,11 @@ const setToReply = (setMessageMode: (messageMode: string) => void,
   setEditId('');
 }
 
+function isLoggedIn() {
+  const user = localStorage.getItem('user');
+  return user !== null && user !== undefined;
+}
+
 // This is the message bar at the bottom of the page
 function SendMessageForm({ setError, 
   fetchMessages, 
@@ -94,7 +99,16 @@ function SendMessageForm({ setError,
   editId, 
   setEditId,
   setReplyId}: SendMessageFormProps) {
-  
+  if (!isLoggedIn()){
+    return <div className='msgFormWrapLoggedOut'>
+      <span className='logInMsg'>
+        <strong>
+          Please <a href='/login'>log in</a> to chat in {roomName}.
+        </strong>
+      </span>
+  </div>
+  }
+
   const user = localStorage.getItem('user');
   const changeContent = (event: ChangeEvent<HTMLTextAreaElement>) => { setContent(event.target.value); };
 

@@ -70,11 +70,28 @@
 
 
 .msgFormWrap {
-background-color: var(--bg_color);
-position: fixed; 
-bottom: 0%;
-width: min(800px, 100% - 4rem);
-padding-bottom: 1%;
+  background-color: var(--bg_color);
+  position: fixed; 
+  bottom: 0%;
+  width: min(800px, 100% - 4rem);
+  padding-bottom: 1%;
+}
+
+.msgFormWrapLoggedOut {
+  background-color: var(--bg_color);
+  position: fixed; 
+  bottom: 0%;
+  width: min(800px, 100% - 4rem);
+  padding-bottom: 1%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logInMsg {
+  margin: auto;
+  color: red;
 }
 
 .SendMsgForm {
