@@ -41,15 +41,15 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
   }
 
   return (
-    <form onSubmit={addChatroom}>
-      <label htmlFor="name">
+    <form className="addChatroomFormDiv" onSubmit={addChatroom}>
+      <label className='acfLabels' htmlFor="name">
         Room Name
       </label>
-      <input type="text" id="name" value={name} onChange={changeName}/>
-      <label htmlFor="description">
+      <input className='acfInputs' type="text" id="name" value={name} onChange={changeName}/>
+      <label className='acfLabels' htmlFor="description">
         Description
       </label>
-      <input type="text" id="description" value={description} onChange={changeDescription}/>
+      <input className='acfInputs' type="text" id="description" value={description} onChange={changeDescription}/>
       <button type="submit">Create Room</button>
     </form>
   );
