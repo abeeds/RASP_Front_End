@@ -1,18 +1,2 @@
 # To-Do List
 - Write a home page greeting the user
-- Improve CSS in messages page
-    - fixed display showing what chatroom you are in
-- Add an edit message option
-    - should toggle the msg bar to edit a message rather than send a new one
-    - scroll to message edited
-    - some indication letting user know what is being edited
-    - highlight the msg being edited
-- implement way to reply to messages (can just add "reply_to" field to a msg in db)
-- implement way to store and access images (need to look into dropbox/any file storage api)
-    - kind of optional but looks cool if we do it
-- Hide the send message bar from users if not logged in
-- Profile page letting the user edit their username
-    - these should appear upon a button press
-    - shouldn't be able to interact with anything else
-- Add restrictions to the username and password in register form
-    - username can't be admin (some authentication in the backend)
