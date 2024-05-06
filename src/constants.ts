@@ -4,7 +4,7 @@ export const ADMIN_KEY = 'avespaisnotamotorcycle'
 // ENDPOINTS
 
 export const GET_FORMS = BACKEND_URL + "/get_forms";
-export const UPDATE_PASS = BACKEND_URL + "/update_password";
+export const UPDATE_PASS = BACKEND_URL + "/users/update_password";
 
 export const BAN = BACKEND_URL + "/users/ban/"; // username
 export const DEACTIVATE = BACKEND_URL + "/users/deactivate/";

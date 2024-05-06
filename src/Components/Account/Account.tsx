@@ -12,36 +12,27 @@ interface Field {
   label?: string;
 }
 
-interface FormProps {
+interface EpFormProps {
+  formName: string;
+  endpoint: string;
+  setError: (error: string) => void;
+}
+
+interface AccountProps {
   handleSubmit: (answers: Record<string, string>) => void;
 }
 
-function Account({ handleSubmit }: FormProps): JSX.Element {
-  const navigate = useNavigate();
-  const [error, setError] = useState('');
+function fieldsToAnswers(fields: Field[]): Record<string, string> {
+  const answers: Record<string, string> = {};
+  fields.forEach(({ fieldName }) => {
+    answers[fieldName] = '';
+  });
+  return answers;
+}
+
+function EpForm({formName, endpoint, setError}:EpFormProps) {
   const [fields, setFields] = useState<Field[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    // Fetch form fields from backend
-    axios.get(`${FETCH_FORM}/UpdatePass`)
-      .then(response => {
-        console.log('response data', response.data)
-        setFields(response.data);
-        setAnswers(fieldsToAnswers(response.data));
-      })
-      .catch(error => {
-        console.error('Error fetching form fields:', error);
-      });
-  }, []); // Empty dependency array means this effect runs only once after the initial render
-
-  function fieldsToAnswers(fields: Field[]): Record<string, string> {
-    const answers: Record<string, string> = {};
-    fields.forEach(({ fieldName }) => {
-      answers[fieldName] = '';
-    });
-    return answers;
-  }
 
   const answerQuestion = (fieldName: string, value: string) => {
     setAnswers(prevAnswers => ({
@@ -49,8 +40,7 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
       [fieldName]: value
     }));
   };
-
-
+  
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // handleSubmit(answers);
@@ -61,11 +51,18 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
     */
     
     // Send answers to backend
-    axios.put(`${UPDATE_PASS}`, answers)
+    axios.put(endpoint, answers)
       .then(response => {
         console.log('Submission successful:', response.data);
         // If needed, handle success response
         setError(response.data.Status);
+        setAnswers({});
+        fields.forEach(field => {
+          const inputElement = document.getElementById(field.fieldName) as HTMLInputElement;
+          if (inputElement) {
+            inputElement.value = '';
+          }
+        });
       })
       .catch(error => {
         console.error('Error submitting answers:', error);
@@ -75,6 +72,40 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
     
   };
 
+  useEffect(() => {
+    axios.get(`${FETCH_FORM}/${formName}`)
+    .then(response => {
+      console.log('response data', response.data)
+      setFields(response.data);
+      setAnswers(fieldsToAnswers(response.data));
+    })
+    .catch(error => {
+      console.error('Error fetching form fields:', error);
+    });
+  }, []);
+
+  return <form className='AcctForm' onSubmit={handleFormSubmit}>
+            {fields.map(({ fieldName, type, label }) => (
+              <div key={fieldName}>
+                <label htmlFor={fieldName}>{label}</label> <br></br>
+                <input
+                  className='AcctFormInputs'
+                  key={fieldName}
+                  type={type || 'text'}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    answerQuestion(fieldName, e.target.value);
+                  }}
+                />
+              </div>
+            ))}
+            <button type="submit">Submit</button>
+          </form>
+}
+
+function Account({ handleSubmit }: AccountProps): JSX.Element {
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
+
   return (
     <div className="wrapper">
       {error && (
@@ -83,22 +114,11 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
         </div>
       )}
       <h1>Change Password</h1>
-      <form className='AcctForm' onSubmit={handleFormSubmit}>
-        {fields.map(({ fieldName, type, label }) => (
-          <div key={fieldName}>
-            <label htmlFor={fieldName}>{label}</label> <br></br>
-            <input
-              className='AcctFormInputs'
-              key={fieldName}
-              type={type || 'text'}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                answerQuestion(fieldName, e.target.value);
-              }}
-            />
-          </div>
-        ))}
-        <button type="submit">Submit</button>
-      </form>
+      <EpForm 
+        formName='UpdatePass' 
+        endpoint={UPDATE_PASS} 
+        setError={setError}
+      />
       <hr></hr>
       <button onClick={() => {
         localStorage.removeItem('user');
