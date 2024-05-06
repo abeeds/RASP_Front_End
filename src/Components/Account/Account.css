@@ -1,0 +1,24 @@
+.AcctForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.AcctForm * {
+    margin-bottom: 5px;
+  }
+
+.AcctFormInputs {
+    background-color: var(--bg_color);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
+    outline: none;
+}
+
+.AcctFormInputs:focus {
+    background-color: --bg_color;
+    outline: none;
+  }

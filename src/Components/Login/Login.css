@@ -22,3 +22,8 @@
     background-color: --bg_color;
     outline: none;
 }
+
+.changeMode {
+    position: relative;
+    left: 41.75%;
+}

@@ -99,7 +99,11 @@ function LoginForm({setError}: LoginFormProps) {
       {loginOrReg ? (
           <>
           <h1>Register</h1>
-          <button type="button" onClick={setToLogIn}>Login Instead</button>
+          <button 
+            className='changeMode' 
+            type="button" 
+            onClick={setToLogIn}
+          >Login Instead</button>
           <form 
             className='regForm'
             onSubmit={register}
@@ -142,7 +146,11 @@ function LoginForm({setError}: LoginFormProps) {
         (
           <>
           <h1>Login</h1>
-          <button type="button" onClick={setToReg}>Register Instead</button>
+          <button 
+            className='changeMode'
+            type="button" 
+            onClick={setToReg}
+          >Register Instead</button>
           <form 
             className='logInForm'
             onSubmit={logIn}

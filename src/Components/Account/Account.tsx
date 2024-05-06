@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import { FETCH_FORM, UPDATE_PASS } from '../../constants';
-
+import './Account.css';
 
 interface Field {
   fieldName: string;
@@ -82,11 +82,13 @@ function Account({ handleSubmit }: FormProps): JSX.Element {
         {error}
         </div>
       )}
-      <form onSubmit={handleFormSubmit}>
+      <h1>Change Password</h1>
+      <form className='AcctForm' onSubmit={handleFormSubmit}>
         {fields.map(({ fieldName, type, label }) => (
           <div key={fieldName}>
-            <label htmlFor={fieldName}>{label}: </label>
+            <label htmlFor={fieldName}>{label}</label> <br></br>
             <input
+              className='AcctFormInputs'
               key={fieldName}
               type={type || 'text'}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
