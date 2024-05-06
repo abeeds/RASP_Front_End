@@ -56,13 +56,6 @@ function EpForm({formName, endpoint, setError}:EpFormProps) {
         console.log('Submission successful:', response.data);
         // If needed, handle success response
         setError(response.data.Status);
-        setAnswers({});
-        fields.forEach(field => {
-          const inputElement = document.getElementById(field.fieldName) as HTMLInputElement;
-          if (inputElement) {
-            inputElement.value = '';
-          }
-        });
       })
       .catch(error => {
         console.error('Error submitting answers:', error);
