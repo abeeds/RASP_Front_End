@@ -21,8 +21,15 @@ interface Chatroom {
 }
 
 
+function isLoggedIn() {
+  const user = localStorage.getItem('user');
+  return user !== null && user !== undefined;
+}
 
 function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
+  if(!isLoggedIn()) {
+    return <></>
+  }
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
