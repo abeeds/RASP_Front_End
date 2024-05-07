@@ -219,7 +219,7 @@ function Messages() {
         setMsgs(msgsArray);
         console.log("msgs fetched.");
       })
-      .catch(() => { setError('oopsie woopsie'); });
+      .catch(() => { setError('Something went wrong.'); });
   };
 
   const deleteMessage = (msgKey: string) => {

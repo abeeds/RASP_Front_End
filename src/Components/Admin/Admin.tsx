@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { getAdmin } from '../../variables';
 import { CHATROOMS_URL, BAN, WIPE_COLLECTION } from '../../constants';
+import './Admin.css'
 
 
 type ChatroomsData = {
@@ -57,7 +58,7 @@ function DelUserForm({ setError }: DelUserFormProps) {
   return (
     <form onSubmit={delUser}>
       <label htmlFor="name">Username</label>
-      <input type="text" id="name" value={name} onChange={changeName} />
+      <input className='adminInputs' type="text" id="name" value={name} onChange={changeName} />
       <button type="submit">Ban</button>
     </form>
   );
@@ -99,9 +100,9 @@ function UpdateRoomForm({ setError }: UpdateRoomFormProps) {
   return (
     <form onSubmit={updateDesc}>
       <label htmlFor="name">Chatroom</label>
-      <input type="text" id="name" value={name} onChange={changeName} />
+      <input className='adminInputs' type="text" id="name" value={name} onChange={changeName} />
       <label htmlFor="name">New Description</label>
-      <input type="text" id="desc" value={desc} onChange={changeDesc} />
+      <input className='adminInputs' type="text" id="desc" value={desc} onChange={changeDesc} />
       <button type="submit">Update</button>
     </form>
   );
@@ -141,9 +142,9 @@ function WipeForm({ setError }: WipeFormProps) {
       { !isHidden && (
         <form onSubmit={confirmWipe}>
           <label htmlFor="collection">Collection</label>
-          <input type="text" id="collection" value={collection} onChange={changeCollection} />
+          <input className='adminInputs' type="text" id="collection" value={collection} onChange={changeCollection} />
           <label htmlFor="code">Code</label>
-          <input type="text" id="code" value={code} onChange={changeCode} />
+          <input className='adminInputs' type="text" id="code" value={code} onChange={changeCode} />
           <button type="submit">Nuke!</button>
         </form>
       )}
