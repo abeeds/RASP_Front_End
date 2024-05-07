@@ -1,7 +1,6 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 // import { setRoom } from '../../variables';
@@ -20,6 +19,8 @@ interface Chatroom {
   description: string;
   owner: string;
 }
+
+
 
 function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
   const [name, setName] = useState('');
@@ -56,7 +57,7 @@ function AddChatroomForm({ setError, fetchChatrooms }: AddChatroomFormProps) {
 }
 
 function Chatrooms() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [error, setError] = useState('');
   const [chatrooms, setChatrooms] = useState<Chatroom[]>([]);
@@ -89,6 +90,20 @@ function Chatrooms() {
     [],
   );
 
+  const deleteChatroom = (chatroom_name: string) => {
+    axios.delete(`${CHATROOMS_URL}/${chatroom_name}`)
+      .then(() => {
+        setError('');
+        fetchChatrooms();
+      })
+      .catch((error) => { setError(error.response.data.message); });
+  }
+
+  const handleDeleteIconClick = (e: React.MouseEvent<HTMLElement>, chatroomName: string): void => {
+    e.stopPropagation(); 
+    deleteChatroom(chatroomName);
+  };
+
   return (
     <div className="wrapper">
       <h1 className='chatroom-label'>
@@ -102,26 +117,32 @@ function Chatrooms() {
     <div className='chatroom-display'>
       {chatrooms.map(
         (chatroom) => (
-
-          <Link 
-            key={chatroom.chatroom_name}
-            to={`/chatrooms/${encodeURIComponent(chatroom.chatroom_name)}`}
-            style={{ textDecoration: 'none' }}
-          >
-            <div className="chatroom-cont">
+            <div 
+              key={chatroom.chatroom_name}
+              onClick={()=>{navigate(`/chatrooms/${encodeURIComponent(chatroom.chatroom_name)}`)}} 
+              className="chatroom-cont"
+            >
               {chatroom.owner == localStorage.getItem('user') ? (
                 <>
-                  <h2> {chatroom.chatroom_name} <i className="fa-solid fa-crown"></i></h2>
-                  <p>{chatroom.description}</p>
+                  <h2>
+                    {chatroom.chatroom_name} 
+                    <i className="fa-solid fa-crown"/>
+                    <i 
+                      className="fa-regular fa-trash-can" 
+                      id = 'delChatroom'
+                      onClick={(e) => {handleDeleteIconClick(e, chatroom.chatroom_name)
+                      }}
+                    />
+                  </h2>
+                  
                 </>
               ):(
                 <>
                   <h2> {chatroom.chatroom_name} </h2>
-                  <p>{chatroom.description}</p>
                 </>
               )}
+              <p>{chatroom.description}</p>
             </div>
-          </Link>
         ))
       }
     </div>
