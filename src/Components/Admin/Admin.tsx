@@ -58,7 +58,7 @@ function DelUserForm({ setError }: DelUserFormProps) {
     <form onSubmit={delUser}>
       <label htmlFor="name">Username</label>
       <input type="text" id="name" value={name} onChange={changeName} />
-      <button type="submit">Smite</button>
+      <button type="submit">Ban</button>
     </form>
   );
 }
