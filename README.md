@@ -1,6 +1,5 @@
 # RASP Front End
-This is the front end repo for [RASP](https://github.com/abeeds/RASP) <br>
-[To-do list](https://github.com/abeeds/RASP_Front_End/blob/main/to-do-list.md)
+This is the front end repo for [RASP](https://github.com/abeeds/RASP)
 
 ## Build and Run
 - install packages with `npm install`
